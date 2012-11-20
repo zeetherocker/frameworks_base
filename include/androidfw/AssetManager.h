@@ -1,5 +1,6 @@
 /*
  * Copyright (C) 2006 The Android Open Source Project
+ * This code has been modified.  Portions copyright (C) 2010, T-Mobile USA, Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -23,6 +24,7 @@
 #include <androidfw/Asset.h>
 #include <androidfw/AssetDir.h>
 #include <androidfw/ZipFileRO.h>
+#include <androidfw/PackageRedirectionMap.h>
 #include <utils/KeyedVector.h>
 #include <utils/SortedVector.h>
 #include <utils/String16.h>
@@ -80,8 +82,8 @@ public:
     virtual ~AssetManager(void);
 
     static int32_t getGlobalCount();
-    
-    /*                                                                       
+
+    /*
      * Add a new source for assets.  This can be called multiple times to
      * look in multiple places for assets.  It can be either a directory (for
      * finding assets as raw files on the disk) or a ZIP file.  This newly
@@ -92,15 +94,15 @@ public:
      * then on success, *cookie is set to the value corresponding to the
      * newly-added asset source.
      */
-    bool addAssetPath(const String8& path, void** cookie);
+    bool addAssetPath(const String8& path, void** cookie, bool asSkin=false);
 
-    /*                                                                       
+    /*
      * Convenience for adding the standard system assets.  Uses the
      * ANDROID_ROOT environment variable to find them.
      */
     bool addDefaultAssets();
 
-    /*                                                                       
+    /*
      * Iterate over the asset paths in this manager.  (Previously
      * added via addAssetPath() and addDefaultAssets().)  On first call,
      * 'cookie' must be NULL, resulting in the first cookie being returned.
@@ -109,7 +111,7 @@ public:
      */
     void* nextAssetPath(void* cookie) const;
 
-    /*                                                                       
+    /*
      * Return an asset path in the manager.  'which' must be between 0 and
      * countAssetPaths().
      */
@@ -193,7 +195,7 @@ public:
      */
     FileType getFileType(const char* fileName);
 
-    /*                                                                       
+    /*
      * Return the complete resource table to find things in the package.
      */
     const ResTable& getResources(bool required = true) const;
@@ -212,11 +214,23 @@ public:
      * the current data.
      */
     bool isUpToDate();
-    
+
     /**
      * Get the known locales for this asset manager object.
      */
     void getLocales(Vector<String8>* locales) const;
+
+    /*
+     * Remove existing source for assets.
+     *
+     * Also updates the ResTable object to reflect the change.
+     *
+     * Returns "true" on success, "false" on failure.
+     */
+    bool detachThemePath(const String8& packageName, void *cookie);
+    bool attachThemePath(const String8& path, void** cookie);
+    void addRedirections(PackageRedirectionMap* resMap);
+    void clearRedirections();
 
 private:
     struct asset_path
@@ -224,8 +238,10 @@ private:
         String8 path;
         FileType type;
         String8 idmap;
+        bool asSkin;
     };
 
+    void updateResTableFromAssetPath(ResTable* rt, const asset_path& ap, void* cookie) const;
     Asset* openInPathLocked(const char* fileName, AccessMode mode,
         const asset_path& path);
     Asset* openNonAssetInPathLocked(const char* fileName, AccessMode mode,
@@ -285,9 +301,9 @@ private:
 
         ResTable* getResourceTable();
         ResTable* setResourceTable(ResTable* res);
-        
+
         bool isUpToDate();
-        
+
     protected:
         ~SharedZip();
 
@@ -334,7 +350,7 @@ private:
         static String8 getPathName(const char* path);
 
         bool isUpToDate();
-        
+
     private:
         void closeZip(int idx);
 

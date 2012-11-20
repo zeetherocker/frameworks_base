@@ -210,10 +210,10 @@ public class PhoneWindowManager implements WindowManagerPolicy {
 
     Context mContext;
     Context mUiContext;
-    private IWindowManager mWindowManager;
-    private WindowManagerFuncs mWindowManagerFuncs;
-    private PowerManager mPowerManager;
-    private IStatusBarService mStatusBarService;
+    IWindowManager mWindowManager;
+    WindowManagerFuncs mWindowManagerFuncs;
+    PowerManager mPowerManager;
+    IStatusBarService mStatusBarService;
     boolean mPreloadedRecentApps;
     private final Object mServiceAquireLock = new Object();
     private Vibrator mVibrator; // Vibrator for giving feedback of orientation changes
@@ -1945,13 +1945,15 @@ public class PhoneWindowManager implements WindowManagerPolicy {
             if (DEBUG_STARTING_WINDOW) Slog.d(TAG, "addStartingWindow " + packageName
                     + ": nonLocalizedLabel=" + nonLocalizedLabel + " theme="
                     + Integer.toHexString(theme));
-            if (theme != context.getThemeResId() || labelRes != 0) {
-                try {
-                    context = context.createPackageContext(packageName, 0);
+
+            try {
+                context = context.createPackageContext(packageName, 0);
+                if (theme != context.getThemeResId()) {
+
                     context.setTheme(theme);
-                } catch (PackageManager.NameNotFoundException e) {
-                    // Ignore
                 }
+            } catch (PackageManager.NameNotFoundException e) {
+                // Ignore
             }
 
             Window win = PolicyManager.makeNewWindow(context);
@@ -5080,6 +5082,12 @@ public class PhoneWindowManager implements WindowManagerPolicy {
             }
         }
     }
+
+    BroadcastReceiver mThemeChangeReceiver = new BroadcastReceiver() {
+        public void onReceive(Context context, Intent intent) {
+            mUiContext = null;
+        }
+    };
 
     @Override
     public void screenTurnedOff(int why) {
