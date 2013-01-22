@@ -395,6 +395,7 @@ aidl_files := \
 	frameworks/base/core/java/com/android/internal/view/IInputMethodClient.aidl \
 	frameworks/base/core/java/com/android/internal/view/IInputMethodManager.aidl \
 	frameworks/base/core/java/com/android/internal/view/IInputMethodSession.aidl \
+    frameworks/base/core/java/android/bluetooth/BluetoothLEServiceUuid.aidl  \
 	frameworks/base/graphics/java/android/graphics/Bitmap.aidl \
 	frameworks/base/graphics/java/android/graphics/Rect.aidl \
 	frameworks/base/graphics/java/android/graphics/Region.aidl \
@@ -631,9 +632,9 @@ web_docs_sample_code_flags := \
 		-samplecode $(sample_dir)/BasicSyncAdapter \
  		            samples/BasicSyncAdapter "" \
 		-samplecode $(sample_dir)/StorageClient \
- 		            samples/StorageClient "" 
+ 		            samples/StorageClient ""
 #		-samplecode $(sample_dir)/StorageProvider \
-# 		            samples/StorageProvider "" 
+# 		            samples/StorageProvider ""
 #       -samplecode $(sample_dir)/AndroidBeamDemo \
 # 		            samples/AndroidBeamDemo "Android Beam Demo" \
 # 		-samplecode $(sample_dir)/ApiDemos \
