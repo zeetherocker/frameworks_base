@@ -154,6 +154,7 @@ public class QuickSettingsController {
     private ContentObserver mObserver;
     public PhoneStatusBar mStatusBarService;
     private final String mSettingsKey;
+    private boolean mHideLiveTiles;
 
     private InputMethodTile mIMETile;
 
@@ -295,6 +296,9 @@ public class QuickSettingsController {
             }
         }
 
+        if (mHideLiveTiles) {
+        	return;
+        }
         // Load the dynamic tiles
         // These toggles must be the last ones added to the view, as they will show
         // only when they are needed
@@ -463,6 +467,16 @@ public class QuickSettingsController {
         for (QuickSettingsTile t : mQuickSettingsTiles) {
             t.updateResources();
         }
+    }
+
+    public void setTileTitleVisibility(boolean visible) {
+        for (QuickSettingsTile t : mQuickSettingsTiles) {
+                t.setLabelVisibility(visible);
+        }
+    }
+
+    public void hideLiveTiles(boolean hide) {
+        mHideLiveTiles = hide;
     }
 
     private void WeatherDialog() {
