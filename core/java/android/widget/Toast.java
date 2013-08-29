@@ -316,7 +316,7 @@ public class Toast {
 
         private final WindowManager.LayoutParams mParams = new WindowManager.LayoutParams();
 
-        Handler mHandler = new Handler() { 
+        Handler mHandler = new Handler() {
             @Override
             public void handleMessage(Message msg) {
                 switch (msg.what) {
@@ -326,7 +326,7 @@ public class Toast {
                 case MSG_HIDE:
                     handleHide();
                     break;
-                } 
+                }
             }
         };
 
@@ -335,10 +335,8 @@ public class Toast {
         float mHorizontalMargin;
         float mVerticalMargin;
 
-
         View mView;
         View mNextView;
-
         WindowManager mWM;
 
         TN() {
@@ -362,7 +360,7 @@ public class Toast {
         @Override
         public void show() {
             if (localLOGV) Log.v(TAG, "SHOW: " + this);
-            mHandler.sendEmptyMessage(MSG_SHOW); 
+            mHandler.sendEmptyMessage(MSG_SHOW);
         }
 
         /**
@@ -375,7 +373,7 @@ public class Toast {
         }
 
         public void cancel() {
-            mHandler.removeMessages(MSG_SHOW); 
+            mHandler.removeMessages(MSG_SHOW);
         }
 
         public void handleShow() {
@@ -389,7 +387,7 @@ public class Toast {
                 if (context.getApplicationContext() != null) {
                     // Use application context, except when called from system
                     // service where there is no application context.
-                    context = context.getApplicationContext(); 
+                    context = context.getApplicationContext();
                 }
                 mWM = (WindowManager)context.getSystemService(Context.WINDOW_SERVICE);
                 // We can resolve the Gravity here by using the Locale for getting
