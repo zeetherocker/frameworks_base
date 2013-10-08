@@ -1791,5 +1791,8 @@
   <java-symbol type="style" name="Animation.Toast.GrowFadeBottom" />
   <java-symbol type="style" name="Animation.Toast.Translucent" />
 
+  <!-- Gesture Sensor -->
+  <java-symbol type="bool" name="config_enableGestureService" />
+
   <java-symbol type="bool" name="use_motion_accel" />
 </resources>
