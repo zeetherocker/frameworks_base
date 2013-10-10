@@ -1,11 +1,11 @@
-<!-- ChaosLab: GestureAnywhere - BEGIN -->
-<com.android.systemui.chaos.lab.gestureanywhere.GestureAnywhereView
+<!-- OSELab: GestureAnywhere - BEGIN -->
+<com.android.systemui.ose.lab.gestureanywhere.GestureAnywhereView
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="20dp"
     android:layout_height="40dp"
     android:layout_gravity="left|center_vertical"
     android:background="#00000000" >
-        
+
     <FrameLayout
         android:id="@+id/content"
         android:layout_width="match_parent"
@@ -31,5 +31,5 @@
             android:src="@drawable/btn_ga_cancel_gesturing" />
     </FrameLayout>
 
-</com.android.systemui.chaos.lab.gestureanywhere.GestureAnywhereView>
-<!-- ChaosLab: GestureAnywhere - END -->
+</com.android.systemui.ose.lab.gestureanywhere.GestureAnywhereView>
+<!-- OSELab: GestureAnywhere - END -->

@@ -16,8 +16,8 @@
 
 package android.provider;
 
-import android.annotation.ChaosLab;
-import android.annotation.ChaosLab.Classification;
+import android.annotation.OSELab;
+import android.annotation.OSELab.Classification;
 import android.annotation.SdkConstant;
 import android.annotation.SdkConstant.SdkConstantType;
 import android.app.SearchManager;
@@ -3829,14 +3829,14 @@ public final class Settings {
          * Whether to use gesture anywhere feature.
          * @hide
          */
-        @ChaosLab(name="GestureAnywhere", classification=Classification.NEW_FIELD)
+        @OSELab(name="GestureAnywhere", classification=Classification.NEW_FIELD)
         public static final String GESTURE_ANYWHERE_ENABLED = "gesture_anywhere_enabled";
 
         /**
          * Position of gesture anywhere trigger.  Value is either Gravity.LEFT or Gravity.RIGHT
          * @hide
          */
-        @ChaosLab(name="GestureAnywhere", classification=Classification.NEW_FIELD)
+        @OSELab(name="GestureAnywhere", classification=Classification.NEW_FIELD)
         public static final String GESTURE_ANYWHERE_POSITION = "gesture_anywhere_position";
 
         /**
@@ -3844,28 +3844,28 @@ public final class Settings {
          * Used to determine if gestures should be reloaded by the view.
          * @hide
          */
-        @ChaosLab(name="GestureAnywhere", classification=Classification.NEW_FIELD)
+        @OSELab(name="GestureAnywhere", classification=Classification.NEW_FIELD)
         public static final String GESTURE_ANYWHERE_CHANGED = "gesture_anywhere_changed";
 
         /**
          * Width of the gesture anywhere trigger.
          * @hide
          */
-        @ChaosLab(name="GestureAnywhere", classification=Classification.NEW_FIELD)
+        @OSELab(name="GestureAnywhere", classification=Classification.NEW_FIELD)
         public static final String GESTURE_ANYWHERE_TRIGGER_WIDTH = "gesture_anywhere_trigger_width";
 
         /**
          * Position of gesture anywhere trigger.
          * @hide
          */
-        @ChaosLab(name="GestureAnywhere", classification=Classification.NEW_FIELD)
+        @OSELab(name="GestureAnywhere", classification=Classification.NEW_FIELD)
         public static final String GESTURE_ANYWHERE_TRIGGER_TOP = "gesture_anywhere_trigger_top";
 
         /**
          * Height of the gesture anywhere trigger.
          * @hide
          */
-        @ChaosLab(name="GestureAnywhere", classification=Classification.NEW_FIELD)
+        @OSELab(name="GestureAnywhere", classification=Classification.NEW_FIELD)
         public static final String GESTURE_ANYWHERE_TRIGGER_HEIGHT = "gesture_anywhere_trigger_height";
 
         /**
@@ -3873,7 +3873,7 @@ public final class Settings {
          * Used internally for showing the trigger in settings so user can see its placement
          * @hide
          */
-        @ChaosLab(name="GestureAnywhere", classification=Classification.NEW_FIELD)
+        @OSELab(name="GestureAnywhere", classification=Classification.NEW_FIELD)
         public static final String GESTURE_ANYWHERE_SHOW_TRIGGER = "gesture_anywhere_show_trigger";
 
         /**

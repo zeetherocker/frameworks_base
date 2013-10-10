@@ -14,19 +14,21 @@
  * limitations under the License.
  */
 
-package com.android.systemui.chaos.lab.gestureanywhere;
+package com.android.systemui.ose.lab.gestureanywhere;
 
 import java.io.File;
 import java.net.URISyntaxException;
 import java.util.List;
 
-import android.annotation.ChaosLab;
-import android.annotation.ChaosLab.Classification;
+import android.annotation.OSELab;
+import android.annotation.OSELab.Classification;
 import android.app.StatusBarManager;
 import android.content.ActivityNotFoundException;
+import android.content.BroadcastReceiver;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.res.Configuration;
 import android.database.ContentObserver;
 import android.gesture.Gesture;
@@ -48,13 +50,13 @@ import android.view.animation.Animation;
 import android.view.animation.DecelerateInterpolator;
 import android.view.animation.TranslateAnimation;
 import com.android.systemui.R;
-import com.android.systemui.chaos.TriggerOverlayView;
+import com.android.systemui.ose.TriggerOverlayView;
 import com.android.systemui.statusbar.BaseStatusBar;
 
 import static android.view.KeyEvent.ACTION_DOWN;
 import static android.view.KeyEvent.KEYCODE_BACK;
 
-@ChaosLab(name="GestureAnywhere", classification=Classification.NEW_CLASS)
+@OSELab(name="GestureAnywhere", classification=Classification.NEW_CLASS)
 public class GestureAnywhereView extends TriggerOverlayView implements GestureOverlayView.OnGestureListener {
     private static final String TAG = "GestureAnywhere";
     private final File mStoreFile = new File("/data/system", "ga_gestures");
@@ -185,12 +187,15 @@ public class GestureAnywhereView extends TriggerOverlayView implements GestureOv
     protected void onAttachedToWindow() {
         super.onAttachedToWindow();
         mSettingsObserver.observe();
+        mContext.registerReceiver(mBroadcastReceiver,
+                new IntentFilter(Intent.ACTION_SCREEN_OFF));
     }
 
     @Override
     protected void onDetachedFromWindow() {
         super.onDetachedFromWindow();
         mSettingsObserver.unobserve();
+        mContext.unregisterReceiver(mBroadcastReceiver);
     }
 
     @Override
@@ -340,6 +345,16 @@ public class GestureAnywhereView extends TriggerOverlayView implements GestureOv
 
         @Override
         public void onAnimationRepeat(Animation animation) {
+        }
+    };
+
+    private final BroadcastReceiver mBroadcastReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String action = intent.getAction();
+            if (Intent.ACTION_SCREEN_OFF.equals(action) && mState != State.Collapsed) {
+                switchToState(State.Closing);
+            }
         }
     };
 

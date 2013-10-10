@@ -22,13 +22,13 @@ import java.lang.annotation.RetentionPolicy;
 
 /**
  * Annotation to be used when adding new features that will be
- * tested out in the ChaOS Lab prior to be a permanent feature.
+ * tested out in the OSE Lab prior to be a permanent feature.
  *
- * Example: @ChaosLab(name="SomeSnazzyFeature", classification=Classification.NEW_CLASS)
+ * Example: @OSELab(name="SomeSnazzyFeature", classification=Classification.NEW_CLASS)
  * @hide
  */
 @Retention(RetentionPolicy.RUNTIME)
-public @interface ChaosLab
+public @interface OSELab
 {
     /**
      * Name should be unique and consistent so it can be easily searched
