@@ -28,6 +28,7 @@ import android.graphics.drawable.Drawable;
 import android.graphics.PorterDuff.Mode;
 import android.net.Uri;
 import android.os.UserHandle;
+import android.os.PowerManager;
 import android.provider.Settings;
 import android.util.AttributeSet;
 import android.util.EventLog;
@@ -71,8 +72,11 @@ public class NotificationPanelView extends PanelView {
     private boolean mTrackingSwipe;
     private boolean mSwipeTriggered;
 
+    private final PowerManager mPm;
+
     public NotificationPanelView(Context context, AttributeSet attrs) {
         super(context, attrs);
+        mPm = (PowerManager) context.getSystemService(Context.POWER_SERVICE);
     }
 
     public void setStatusBar(PhoneStatusBar bar) {
@@ -109,7 +113,6 @@ public class NotificationPanelView extends PanelView {
                     .add(getContext().getString(R.string.accessibility_desc_notification_shade));
             return true;
         }
-
         return super.dispatchPopulateAccessibilityEvent(event);
     }
 
@@ -172,6 +175,7 @@ public class NotificationPanelView extends PanelView {
                     }
                     break;
                 case MotionEvent.ACTION_MOVE:
+                    mPm.cpuBoost(1500000);
                     final float deltaX = Math.abs(event.getX(0) - mGestureStartX);
                     final float deltaY = Math.abs(event.getY(0) - mGestureStartY);
                     final float maxDeltaY = getHeight() * STATUS_BAR_SWIPE_VERTICAL_MAX_PERCENTAGE;
@@ -207,6 +211,7 @@ public class NotificationPanelView extends PanelView {
                     }
                     break;
                 case MotionEvent.ACTION_POINTER_DOWN:
+                    mPm.cpuBoost(1500000);
                     flip = true;
                     break;
                 case MotionEvent.ACTION_UP:
@@ -255,7 +260,6 @@ public class NotificationPanelView extends PanelView {
                     original.getEdgeFlags());
                 shouldRecycleEvent = true;
             }
-
         }
 
         final boolean result = mHandleView.dispatchTouchEvent(event);
@@ -362,5 +366,4 @@ public class NotificationPanelView extends PanelView {
 
         setNotificationWallpaper();
     }
-
 }
