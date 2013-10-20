@@ -225,4 +225,7 @@
   <!-- Panel auto brightness -->
   <java-symbol type="integer" name="config_panelAutoBrightnessValue" />
 
+  <!-- Device supports LED flashlight -->
+  <java-symbol type="bool" name="config_enableTorch" />
+
 </resources>
