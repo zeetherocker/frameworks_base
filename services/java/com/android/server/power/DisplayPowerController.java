@@ -30,8 +30,8 @@ import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
-import android.database.ContentObserver;
 import android.content.res.Resources;
+import android.database.ContentObserver;
 import android.graphics.Bitmap;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
@@ -414,7 +414,7 @@ final class DisplayPowerController {
         mDisplayBlanker = displayBlanker;
         mCallbacks = callbacks;
         mCallbackHandler = callbackHandler;
-	
+
         mLights = lights;
         mTwilight = twilight;
         mSensorManager = sensorManager;
@@ -608,7 +608,7 @@ final class DisplayPowerController {
     public boolean requestPowerState(DisplayPowerRequest request,
             boolean waitForNegativeProximity) {
 
-	final int MAX_BLUR_WIDTH = 900;
+        final int MAX_BLUR_WIDTH = 900;
         final int MAX_BLUR_HEIGHT = 1600;
 
         if (DEBUG) {
@@ -662,8 +662,8 @@ final class DisplayPowerController {
                         tmpBmp.recycle();
                     }
                 } else if (!seeThrough) mKeyguardService.setBackgroundBitmap(null);
-                    mPendingRequestChangedLocked = true;
-                    sendUpdatePowerStateLocked();
+                mPendingRequestChangedLocked = true;
+                sendUpdatePowerStateLocked();
             }
 
             return mDisplayReadyLocked;
