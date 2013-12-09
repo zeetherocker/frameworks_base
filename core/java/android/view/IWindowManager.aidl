@@ -312,4 +312,10 @@ interface IWindowManager
      * @hide
      */
     int getCurrentNavigationBarSize();
+
+    /**
+     * @hide
+     */
+    void updateSettings();
+
 }

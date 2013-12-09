@@ -1238,4 +1238,9 @@ public interface WindowManagerPolicy {
      */
     public boolean isImmersiveMode(int vis);
 
+    /**
+     * @hide
+     */
+    public void updateSettings();
+
 }
