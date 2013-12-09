@@ -11564,6 +11564,10 @@ public class WindowManagerService extends IWindowManager.Stub
         return mLastStatusBarVisibility;
     }
 
+    public void updateStatusBarNavBarHeight() {
+        mPolicy.updateStatusBarNavBarHeight();
+    }
+
     public void notifyFloatActivityTouched(IBinder token, boolean force) {
         synchronized(mWindowMap) {
               boolean changed = false;
