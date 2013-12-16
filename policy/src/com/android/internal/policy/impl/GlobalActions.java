@@ -25,6 +25,7 @@ import com.android.internal.R;
 import android.app.ActivityManagerNative;
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.ActivityNotFoundException;
 import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Context;
@@ -254,6 +255,9 @@ class GlobalActions implements DialogInterface.OnDismissListener, DialogInterfac
         }
         mItems = new ArrayList<Action>();
 
+        final boolean quickbootEnabled = Settings.System.getInt(
+                mContext.getContentResolver(), "enable_quickboot", 0) == 1;
+
         // next: On-The-Go, if enabled
         boolean showOnTheGo = Settings.System.getBoolean(mContext.getContentResolver(),
                 Settings.System.POWER_MENU_ONTHEGO_ENABLED, false);
@@ -340,8 +344,14 @@ class GlobalActions implements DialogInterface.OnDismissListener, DialogInterfac
                             config.getClickActionDescription()) {
 
                         public void onPress() {
-                            // shutdown by making sure radio and power are handled accordingly.
-                            mWindowManagerFuncs.shutdown(true);
+                        // goto quickboot mode
+                        if (quickbootEnabled) {
+                            startQuickBoot();
+                            return;
+                        }
+
+                        // shutdown by making sure radio and power are handled accordingly.
+                        mWindowManagerFuncs.shutdown(true);
                         }
 
                         public boolean showDuringKeyguard() {
@@ -1351,6 +1361,16 @@ class GlobalActions implements DialogInterface.OnDismissListener, DialogInterfac
                             ServiceManager.getService("edgegestureservice"));
             }
             return mEdgeGestureService;
+        }
+    }
+
+    private void startQuickBoot() {
+
+        Intent intent = new Intent("org.codeaurora.action.QUICKBOOT");
+        intent.putExtra("mode", 0);
+        try {
+            mContext.startActivityAsUser(intent,UserHandle.CURRENT);
+        } catch (ActivityNotFoundException e) {
         }
     }
 
