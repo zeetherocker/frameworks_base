@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-/* apps/common/assets/default/default/skins/StatusBar.xml
-**
-** Copyright 2014 OSE Project
+/*
+** Copyright 2009, The Android Open Source Project
 **
 ** Licensed under the Apache License, Version 2.0 (the "License");
 ** you may not use this file except in compliance with the License.
@@ -18,18 +17,12 @@
 */
 -->
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/notification_shortcut_item"
-    android:orientation="vertical"
-    android:clickable="true"
-    android:focusable="true"
-    android:background="@drawable/stat_power_background">
+<!-- These resources are around just to allow their values to be customized
+     for different hardware and product builds. -->
+<resources>
 
-    <ImageView
-        android:id="@+id/notification_shortcut_image"
-        android:layout_width="match_parent"
-        android:layout_height="48dip"
-        android:layout_weight="1"
-        android:scaleType="center" />
+    <!-- configurable width dimension for the app sidebar trigger area -->
+    <dimen name="config_app_sidebar_trigger_width">10dip</dimen>
 
-</LinearLayout>
+</resources>
+
