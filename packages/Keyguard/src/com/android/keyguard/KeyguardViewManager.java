@@ -146,7 +146,7 @@ public class KeyguardViewManager {
         mSeeThrough = Settings.System.getInt(mContext.getContentResolver(),
                 Settings.System.LOCKSCREEN_SEE_THROUGH, 0) == 1;
         mLockscreenNotifications = Settings.System.getInt(mContext.getContentResolver(),
-                Settings.System.LOCKSCREEN_NOTIFICATIONS, mLockscreenNotifications ? 1 : 0) == 1;
+                Settings.System.LOCKSCREEN_NOTIFICATIONS, 0) == 1;
         if(!mSeeThrough) mCustomBackground = null;
         if(mLockscreenNotifications && mNotificationViewManager == null) {
             mNotificationViewManager = new NotificationViewManager(mContext, this);
