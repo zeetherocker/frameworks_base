@@ -37,12 +37,12 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.android.internal.R;
-import com.android.internal.util.slim.AppHelper;
-import com.android.internal.util.slim.ButtonsHelper;
-import com.android.internal.util.slim.ButtonConfig;
-import com.android.internal.util.slim.DeviceUtils;
-import com.android.internal.util.slim.LockscreenTargetUtils;
-import com.android.internal.util.slim.SlimActions;
+import com.android.internal.util.ose.AppHelper;
+import com.android.internal.util.ose.ButtonsHelper;
+import com.android.internal.util.ose.ButtonConfig;
+import com.android.internal.util.ose.DeviceUtils;
+import com.android.internal.util.ose.LockscreenTargetUtils;
+import com.android.internal.util.ose.SlimActions;
 import com.android.internal.widget.LockPatternUtils;
 
 import java.net.URISyntaxException;

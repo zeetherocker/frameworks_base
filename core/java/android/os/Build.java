@@ -112,7 +112,7 @@ public class Build {
         public static final String CODENAME = getString("ro.build.version.codename");
 
         /**
-         * The current version string that defines the slim version
+         * The current version string that defines the ose version
          * the device is on
          * @hide
          */

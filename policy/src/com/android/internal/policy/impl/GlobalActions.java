@@ -75,11 +75,11 @@ import java.util.List;
 import java.util.UUID;
 
 import com.android.internal.statusbar.IStatusBarService;
-import com.android.internal.util.slim.ButtonConfig;
-import com.android.internal.util.slim.ImageHelper;
-import com.android.internal.util.slim.PolicyConstants;
-import com.android.internal.util.slim.PolicyHelper;
-import com.android.internal.util.slim.SlimActions;
+import com.android.internal.util.ose.ButtonConfig;
+import com.android.internal.util.ose.ImageHelper;
+import com.android.internal.util.ose.PolicyConstants;
+import com.android.internal.util.ose.PolicyHelper;
+import com.android.internal.util.ose.SlimActions;
 
 /**
  * Helper to show the global actions dialog.  Each item is an {@link Action} that

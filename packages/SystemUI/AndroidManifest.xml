@@ -213,7 +213,7 @@
             android:taskAffinity="com.android.systemui.net"
             android:excludeFromRecents="true" />
 
-        <!-- Slim shortcut picker -->
+        <!-- OSE shortcut picker -->
         <activity
             android:name="com.android.systemui.CreateShortcut"
             android:label="@string/shortcut_picker"

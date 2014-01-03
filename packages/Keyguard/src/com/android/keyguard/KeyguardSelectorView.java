@@ -48,10 +48,10 @@ import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 
 import com.android.internal.telephony.IccCardConstants.State;
-import com.android.internal.util.slim.AppHelper;
-import com.android.internal.util.slim.LockscreenTargetUtils;
-import com.android.internal.util.slim.DeviceUtils;
-import com.android.internal.util.slim.SlimActions;
+import com.android.internal.util.ose.AppHelper;
+import com.android.internal.util.ose.LockscreenTargetUtils;
+import com.android.internal.util.ose.DeviceUtils;
+import com.android.internal.util.ose.SlimActions;
 import com.android.internal.widget.LockPatternUtils;
 import com.android.internal.widget.multiwaveview.GlowPadView;
 import com.android.internal.widget.multiwaveview.GlowPadView.OnTriggerListener;

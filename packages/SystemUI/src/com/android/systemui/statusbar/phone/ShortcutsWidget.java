@@ -42,10 +42,10 @@ import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
-import com.android.internal.util.slim.ButtonsHelper;
-import com.android.internal.util.slim.ButtonConfig;
-import com.android.internal.util.slim.ButtonsConstants;
-import com.android.internal.util.slim.ImageHelper;
+import com.android.internal.util.ose.ButtonsHelper;
+import com.android.internal.util.ose.ButtonConfig;
+import com.android.internal.util.ose.ButtonsConstants;
+import com.android.internal.util.ose.ImageHelper;
 
 import com.android.systemui.R;
 

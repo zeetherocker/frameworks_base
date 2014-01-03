@@ -20,8 +20,8 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 
-import com.android.internal.util.slim.PolicyConstants;
-import com.android.internal.util.slim.SlimActions;
+import com.android.internal.util.ose.PolicyConstants;
+import com.android.internal.util.ose.SlimActions;
 
 public class Immersive extends Activity  {
 

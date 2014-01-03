@@ -37,7 +37,7 @@
     <string name="yes">Yes</string>
     <string name="no">No</string>
 
-    <!-- Slim Shortcut Actions -->
+    <!-- OSE Shortcut Actions -->
     <string name="shortcut_picker">Slim Shortcuts</string>
     <string name="shortcut_immersive">Immersive Mode Toggle</string>
     <string name="shortcut_quiethours">Quiethours Toggle</string>

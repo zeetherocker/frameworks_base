@@ -39,8 +39,8 @@ import android.view.ViewDebug;
 import android.view.accessibility.AccessibilityEvent;
 import android.widget.ImageView;
 
-import com.android.internal.util.slim.ButtonsConstants;
-import com.android.internal.util.slim.SlimActions;
+import com.android.internal.util.ose.ButtonsConstants;
+import com.android.internal.util.ose.SlimActions;
 
 import com.android.systemui.R;
 
