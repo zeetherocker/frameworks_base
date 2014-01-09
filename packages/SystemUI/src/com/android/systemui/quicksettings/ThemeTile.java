@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013 The SlimRoms Project
+ * Copyright (C) 2014 OSE Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -28,7 +28,7 @@ import android.view.View;
 import android.view.View.OnLongClickListener;
 
 import com.android.internal.util.ose.ButtonsConstants;
-import com.android.internal.util.ose.SlimActions;
+import com.android.internal.util.ose.OSEActions;
 
 import com.android.systemui.R;
 import com.android.systemui.statusbar.phone.QuickSettingsContainerView;
@@ -48,11 +48,11 @@ public class ThemeTile extends QuickSettingsTile {
         mOnClick = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // SlimAction can take care of it
+                // OSEAction can take care of it
                 // will collapse as well automatically
                 // the drawer to reconstruct it or show
                 // the toast message if not possible
-                SlimActions.processAction(mContext, ButtonsConstants.ACTION_THEME_SWITCH, false);
+                OSEActions.processAction(mContext, ButtonsConstants.ACTION_THEME_SWITCH, false);
             }
         };
 

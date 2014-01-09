@@ -1,7 +1,7 @@
 /*
  * Copyright (C) 2012 The Android Open Source Project
  * Copyright (C) 2013 CyanogenMod Project
- * Copyright (C) 2013 The SlimRoms Project
+ * Copyright (C) 2014 OSE Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -29,7 +29,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 
 import com.android.internal.util.ose.ButtonsConstants;
-import com.android.internal.util.ose.SlimActions;
+import com.android.internal.util.ose.OSEActions;
 import com.android.internal.util.ose.TorchConstants;
 
 import com.android.systemui.R;
@@ -46,7 +46,7 @@ public class TorchTile extends QuickSettingsTile {
         mOnClick = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SlimActions.processAction(mContext, ButtonsConstants.ACTION_TORCH, false);
+                OSEActions.processAction(mContext, ButtonsConstants.ACTION_TORCH, false);
             }
         };
 

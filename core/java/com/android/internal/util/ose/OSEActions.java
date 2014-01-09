@@ -1,5 +1,5 @@
 /*
-* Copyright (C) 2013 SlimRoms Project
+* Copyright (C) 2014 OSE Project
 *
 * Licensed under the Apache License, Version 2.0 (the "License");
 * you may not use this file except in compliance with the License.
@@ -49,7 +49,7 @@ import com.android.internal.statusbar.IStatusBarService;
 
 import java.net.URISyntaxException;
 
-public class SlimActions {
+public class OSEActions {
 
     private static final int MSG_INJECT_KEY_DOWN = 1066;
     private static final int MSG_INJECT_KEY_UP = 1067;
@@ -276,7 +276,7 @@ public class SlimActions {
                 try {
                     intent = Intent.parseUri(action, 0);
                 } catch (URISyntaxException e) {
-                    Log.e("SlimActions:", "URISyntaxException: [" + action + "]");
+                    Log.e("OSEActions:", "URISyntaxException: [" + action + "]");
                     return;
                 }
                 startActivity(context, windowManagerService, isKeyguardShowing, intent);

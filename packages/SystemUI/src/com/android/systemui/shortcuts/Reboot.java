@@ -1,5 +1,5 @@
 /*
- * Copyright 2013 SlimRom
+ * Copyright 2014 OSE Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -23,7 +23,7 @@ import android.os.Bundle;
 import android.os.PowerManager;
 
 import com.android.internal.util.ose.PolicyConstants;
-import com.android.internal.util.ose.SlimActions;
+import com.android.internal.util.ose.OSEActions;
 
 public class Reboot extends Activity  {
 

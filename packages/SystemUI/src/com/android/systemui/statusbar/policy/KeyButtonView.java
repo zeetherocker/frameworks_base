@@ -40,7 +40,7 @@ import android.view.accessibility.AccessibilityEvent;
 import android.widget.ImageView;
 
 import com.android.internal.util.ose.ButtonsConstants;
-import com.android.internal.util.ose.SlimActions;
+import com.android.internal.util.ose.OSEActions;
 
 import com.android.systemui.R;
 
@@ -74,7 +74,7 @@ public class KeyButtonView extends ImageView {
             if (isPressed()) {
                 sendAccessibilityEvent(AccessibilityEvent.TYPE_VIEW_LONG_CLICKED);
                 if (mLongpressAction != null
-                    && SlimActions.isActionKeyEvent(mLongpressAction)) {
+                    && OSEActions.isActionKeyEvent(mLongpressAction)) {
                     setHapticFeedbackEnabled(false);
                 }
                 performLongClick();
@@ -302,7 +302,7 @@ public class KeyButtonView extends ImageView {
                 if (!mIsLongpressed) {
                     if (isPressed()) {
                         if (mClickAction != null
-                            && !SlimActions.isActionKeyEvent(mClickAction)) {
+                            && !OSEActions.isActionKeyEvent(mClickAction)) {
                             performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY);
                         }
                         performClick();
@@ -322,7 +322,7 @@ public class KeyButtonView extends ImageView {
     private OnClickListener mClickListener = new OnClickListener() {
         @Override
         public void onClick(View v) {
-            SlimActions.processAction(mContext, mClickAction, false);
+            OSEActions.processAction(mContext, mClickAction, false);
             return;
         }
     };
@@ -330,7 +330,7 @@ public class KeyButtonView extends ImageView {
     private OnLongClickListener mLongPressListener = new OnLongClickListener() {
         @Override
         public boolean onLongClick(View v) {
-            SlimActions.processAction(mContext, mLongpressAction, true);
+            OSEActions.processAction(mContext, mLongpressAction, true);
             return true;
         }
     };

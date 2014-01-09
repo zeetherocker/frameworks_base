@@ -51,7 +51,7 @@ import com.android.internal.telephony.IccCardConstants.State;
 import com.android.internal.util.ose.AppHelper;
 import com.android.internal.util.ose.LockscreenTargetUtils;
 import com.android.internal.util.ose.DeviceUtils;
-import com.android.internal.util.ose.SlimActions;
+import com.android.internal.util.ose.OSEActions;
 import com.android.internal.widget.LockPatternUtils;
 import com.android.internal.widget.multiwaveview.GlowPadView;
 import com.android.internal.widget.multiwaveview.GlowPadView.OnTriggerListener;
@@ -121,7 +121,7 @@ public class KeyguardSelectorView extends LinearLayout implements KeyguardSecuri
                     if (GlowPadView.EMPTY_TARGET.equals(targetUri)) {
                         mCallback.dismiss(false);
                     } else {
-                        SlimActions.processAction(mContext, targetUri, false);
+                        OSEActions.processAction(mContext, targetUri, false);
                     }
                 }
             }

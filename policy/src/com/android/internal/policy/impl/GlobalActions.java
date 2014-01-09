@@ -79,7 +79,7 @@ import com.android.internal.util.ose.ButtonConfig;
 import com.android.internal.util.ose.ImageHelper;
 import com.android.internal.util.ose.PolicyConstants;
 import com.android.internal.util.ose.PolicyHelper;
-import com.android.internal.util.ose.SlimActions;
+import com.android.internal.util.ose.OSEActions;
 
 /**
  * Helper to show the global actions dialog.  Each item is an {@link Action} that
@@ -328,7 +328,7 @@ class GlobalActions implements DialogInterface.OnDismissListener, DialogInterfac
                             config.getClickAction(), config.getIcon(), true),
                             config.getClickActionDescription()) {
                         public void onPress() {
-                            SlimActions.processAction(
+                            OSEActions.processAction(
                                 mContext, config.getClickAction(), false);
                         }
 
@@ -361,7 +361,7 @@ class GlobalActions implements DialogInterface.OnDismissListener, DialogInterfac
                             config.getClickAction(), config.getIcon(), true),
                             config.getClickActionDescription()) {
                         public void onPress() {
-                            SlimActions.processAction(
+                            OSEActions.processAction(
                                 mContext, config.getClickAction(), false);
                         }
 
@@ -461,7 +461,7 @@ class GlobalActions implements DialogInterface.OnDismissListener, DialogInterfac
                 R.string.global_actions_expanded_desktop_mode_off_status) {
 
             void onToggle(boolean on) {
-                SlimActions.processAction(
+                OSEActions.processAction(
                     mContext, PolicyConstants.ACTION_EXPANDED_DESKTOP, false);
             }
 

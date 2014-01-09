@@ -1,5 +1,5 @@
 /*
- * Copyright 2013 SlimRom
+ * Copyright 2014 OSE Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,7 +21,7 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import com.android.internal.util.ose.ButtonsConstants;
-import com.android.internal.util.ose.SlimActions;
+import com.android.internal.util.ose.OSEActions;
 
 public class Screenshot extends Activity  {
 
@@ -33,7 +33,7 @@ public class Screenshot extends Activity  {
     @Override
     public void onResume() {
         super.onResume();
-        SlimActions.processAction(
+        OSEActions.processAction(
                 this, ButtonsConstants.ACTION_SCREENSHOT, false);
         this.finish();
     }

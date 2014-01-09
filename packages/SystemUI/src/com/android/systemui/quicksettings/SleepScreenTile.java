@@ -1,7 +1,7 @@
 /*
  * Copyright (C) 2012 The Android Open Source Project
  * Copyright (C) 2013 CyanogenMod Project
- * Copyright (C) 2013 The SlimRoms Project
+ * Copyright (C) 2014 OSE Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -27,7 +27,7 @@ import android.view.View.OnClickListener;
 import android.view.View.OnLongClickListener;
 
 import com.android.internal.util.ose.ButtonsConstants;
-import com.android.internal.util.ose.SlimActions;
+import com.android.internal.util.ose.OSEActions;
 
 import com.android.systemui.R;
 import com.android.systemui.statusbar.phone.QuickSettingsController;
@@ -51,7 +51,7 @@ public class SleepScreenTile extends QuickSettingsTile {
 
             @Override
             public boolean onLongClick(View v) {
-                SlimActions.processAction(mContext, ButtonsConstants.ACTION_POWER_MENU, true);
+                OSEActions.processAction(mContext, ButtonsConstants.ACTION_POWER_MENU, true);
                 return true;
             }
         };

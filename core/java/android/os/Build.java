@@ -116,7 +116,7 @@ public class Build {
          * the device is on
          * @hide
          */
-        public static final String SLIM = getString("ro.slim.version");
+        public static final String OSE = getString("ro.ose.version");
 
         /**
          * The SDK version to use when accessing resources.

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
 /**
- * Copyright (c) 2013 SlimRoms Project
+ * Copyright (c) 2014 OSE Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -32,7 +32,7 @@
     <string name="accessibility_data_connection_HP">HSPA+</string>
 
     <!-- ose Shortcut Actions -->
-    <string name="shortcut_picker">Slim Parancsikonok</string>
+    <string name="shortcut_picker">OSE Parancsikonok</string>
     <string name="shortcut_immersive">Immersive mód kapcsoló</string>
     <string name="shortcut_quiethours">Csendes órák kapcsoló</string>
     <string name="shortcut_rotation">Forgatás zároló kapcsoló</string>

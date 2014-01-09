@@ -1,5 +1,5 @@
 /*
-* Copyright (C) 2013 SlimRoms Project
+* Copyright (C) 2014 OSE Project
 *
 * Licensed under the Apache License, Version 2.0 (the "License");
 * you may not use this file except in compliance with the License.
@@ -19,7 +19,7 @@ package com.android.internal.util.ose;
 public class ButtonsConstants {
 
     // key must fit with the values arrays from Settings to use
-    // SlimActions.java actions
+    // OSEActions.java actions
     public static final String ACTION_HOME                 = "**home**";
     public static final String ACTION_BACK                 = "**back**";
     public static final String ACTION_SEARCH               = "**search**";

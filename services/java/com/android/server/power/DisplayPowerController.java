@@ -239,7 +239,7 @@ final class DisplayPowerController {
     // a stylish electron beam animation instead.
     private boolean mElectronBeamFadesConfig;
 
-    // Slim settings - override config for ElectronBeam
+    // OSE settings - override config for ElectronBeam
     private int mElectronBeamMode;
 
     // The pending power request.

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Copyright (C) 2012-2013 SlimRoms Project
+<!-- Copyright (C) 2014 OSE Project
 
      Licensed under the Apache License, Version 2.0 (the "License");
      you may not use this file except in compliance with the License.
@@ -56,7 +56,7 @@
     <string name="quick_settings_battery_charging">Зарядка</string>
     <string name="quick_settings_battery_discharging">Не заряжается</string>
     <string name="screenshot_notification_delete">Удалить</string>
-    <string name="shortcut_picker">Ярлыки Slim</string>
+    <string name="shortcut_picker">Ярлыки OSE</string>
     <string name="shortcut_immersive">Переключить обычный режим</string>
     <string name="shortcut_quiethours">Переключение \"тихих часов\"</string>
     <string name="shortcut_rotation">Переключение блокировки поворота</string>

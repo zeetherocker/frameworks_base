@@ -1,6 +1,6 @@
 /*
  * Copyright (C) 2012 ParanoidAndroid Project
- * Copyright (C) 2013 Slimroms
+ * Copyright (C) 2014 OSE Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -42,7 +42,7 @@ import com.android.internal.util.ose.ButtonsHelper;
 import com.android.internal.util.ose.ButtonConfig;
 import com.android.internal.util.ose.DeviceUtils;
 import com.android.internal.util.ose.LockscreenTargetUtils;
-import com.android.internal.util.ose.SlimActions;
+import com.android.internal.util.ose.OSEActions;
 import com.android.internal.widget.LockPatternUtils;
 
 import java.net.URISyntaxException;
@@ -117,7 +117,7 @@ public class KeyguardShortcuts extends LinearLayout {
                     @Override
                     public boolean onLongClick(View v) {
                         doHapticKeyClick(HapticFeedbackConstants.LONG_PRESS);
-                        SlimActions.processAction(mContext, action, true);
+                        OSEActions.processAction(mContext, action, true);
                         return true;
                     }
                 });
@@ -126,7 +126,7 @@ public class KeyguardShortcuts extends LinearLayout {
                     @Override
                     public void onClick(View v) {
                         doHapticKeyClick(HapticFeedbackConstants.VIRTUAL_KEY);
-                        SlimActions.processAction(mContext, action, false);
+                        OSEActions.processAction(mContext, action, false);
                     }
                 });
             }

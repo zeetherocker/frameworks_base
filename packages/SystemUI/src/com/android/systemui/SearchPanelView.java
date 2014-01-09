@@ -60,7 +60,7 @@ import com.android.internal.util.ose.ButtonsConstants;
 import com.android.internal.util.ose.ButtonsHelper;
 import com.android.internal.util.ose.ImageHelper;
 import com.android.internal.util.ose.DeviceUtils;
-import com.android.internal.util.ose.SlimActions;
+import com.android.internal.util.ose.OSEActions;
 import com.android.internal.widget.multiwaveview.GlowPadView;
 import com.android.internal.widget.multiwaveview.GlowPadView.OnTriggerListener;
 import com.android.internal.widget.multiwaveview.TargetDrawable;
@@ -126,11 +126,11 @@ public class SearchPanelView extends FrameLayout implements
                 if (!mSearchPanelLock) {
                     mLongPress = true;
                     mBar.hideSearchPanel();
-                    if (!SlimActions.isActionKeyEvent(mLongList.get(mTarget))) {
+                    if (!OSEActions.isActionKeyEvent(mLongList.get(mTarget))) {
                         performHapticFeedback(HapticFeedbackConstants.LONG_PRESS);
                     }
                     sendAccessibilityEvent(AccessibilityEvent.TYPE_VIEW_LONG_CLICKED);
-                    SlimActions.processAction(mContext, mLongList.get(mTarget), true);
+                    OSEActions.processAction(mContext, mLongList.get(mTarget), true);
                     mSearchPanelLock = true;
                  }
             }
@@ -167,14 +167,14 @@ public class SearchPanelView extends FrameLayout implements
             final int resId = mGlowPadView.getResourceIdForTarget(target);
             mTarget = target;
             if (!mLongPress) {
-                if (!SlimActions.isActionKeyEvent(mIntentList.get(target))) {
+                if (!OSEActions.isActionKeyEvent(mIntentList.get(target))) {
                     performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY);
                 }
                 if (!mIntentList.get(target).equals(ButtonsConstants.ACTION_MENU)) {
                     playSoundEffect(SoundEffectConstants.CLICK);
                 }
                 sendAccessibilityEvent(AccessibilityEvent.TYPE_VIEW_CLICKED);
-                SlimActions.processAction(mContext, mIntentList.get(target), false);
+                OSEActions.processAction(mContext, mIntentList.get(target), false);
                 mHandler.removeCallbacks(SetLongPress);
             }
         }
