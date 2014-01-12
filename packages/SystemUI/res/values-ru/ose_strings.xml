@@ -57,6 +57,9 @@
     <string name="quick_settings_battery_discharging">Не заряжается</string>
     <string name="screenshot_notification_delete">Удалить</string>
     <string name="shortcut_picker">Ярлыки OSE</string>
+
+    <string name="screenshot_delete_confirmation">Снимок экрана удален</string>
+    <string name="shortcut_picker">Ярлыки Slim</string>
     <string name="shortcut_immersive">Переключить обычный режим</string>
     <string name="shortcut_quiethours">Переключение \"тихих часов\"</string>
     <string name="shortcut_rotation">Переключение блокировки поворота</string>
@@ -64,7 +67,7 @@
     <string name="shortcut_reboot">Перезагрузка (немедленно)</string>
     <string name="shortcut_last_app">Предыдущее приложение</string>
     <string name="shortcut_screenshot">Снимок экрана</string>
-    <string name="quick_settings_screen_sleep">Потушить экран</string>
+    <string name="shortcut_screensleep">Потушить экран</string>
 
     <string name="cancel">Отмена</string>
     <string name="yes">Да</string>

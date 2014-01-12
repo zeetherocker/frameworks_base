@@ -50,6 +50,42 @@ import static com.android.internal.util.ose.QSConstants.TILE_VOLUME;
 import static com.android.internal.util.ose.QSConstants.TILE_WIFI;
 import static com.android.internal.util.ose.QSConstants.TILE_WIFIAP;
 import static com.android.internal.util.ose.QSConstants.TILE_REBOOT;
+import static com.android.internal.util.ose.QSConstants.TILES_DEFAULT;
+import static com.android.internal.util.ose.QSConstants.DYNAMIC_TILES_DEFAULT;
+import static com.android.internal.util.ose.QSConstants.TILE_AIRPLANE;
+import static com.android.internal.util.ose.QSConstants.TILE_ALARM;
+import static com.android.internal.util.ose.QSConstants.TILE_AUTOROTATE;
+import static com.android.internal.util.ose.QSConstants.TILE_BATTERY;
+import static com.android.internal.util.ose.QSConstants.TILE_BLUETOOTH;
+import static com.android.internal.util.ose.QSConstants.TILE_BRIGHTNESS;
+import static com.android.internal.util.ose.QSConstants.TILE_BUGREPORT;
+import static com.android.internal.util.ose.QSConstants.TILE_CUSTOM;
+import static com.android.internal.util.ose.QSConstants.TILE_CUSTOM_KEY;
+import static com.android.internal.util.ose.QSConstants.TILE_DELIMITER;
+import static com.android.internal.util.ose.QSConstants.TILE_EXPANDEDDESKTOP;
+import static com.android.internal.util.ose.QSConstants.TILE_IMESWITCHER;
+import static com.android.internal.util.ose.QSConstants.TILE_LOCATION;
+import static com.android.internal.util.ose.QSConstants.TILE_LOCKSCREEN;
+import static com.android.internal.util.ose.QSConstants.TILE_LTE;
+import static com.android.internal.util.ose.QSConstants.TILE_MOBILEDATA;
+import static com.android.internal.util.ose.QSConstants.TILE_MUSIC;
+import static com.android.internal.util.ose.QSConstants.TILE_NETWORKMODE;
+import static com.android.internal.util.ose.QSConstants.TILE_NFC;
+import static com.android.internal.util.ose.QSConstants.TILE_QUICKRECORD;
+import static com.android.internal.util.ose.QSConstants.TILE_QUIETHOURS;
+import static com.android.internal.util.ose.QSConstants.TILE_RINGER;
+import static com.android.internal.util.ose.QSConstants.TILE_SCREENTIMEOUT;
+import static com.android.internal.util.ose.QSConstants.TILE_SETTINGS;
+import static com.android.internal.util.ose.QSConstants.TILE_SLEEP;
+import static com.android.internal.util.ose.QSConstants.TILE_SYNC;
+import static com.android.internal.util.ose.QSConstants.TILE_THEME;
+import static com.android.internal.util.ose.QSConstants.TILE_TORCH;
+import static com.android.internal.util.ose.QSConstants.TILE_USBTETHER;
+import static com.android.internal.util.ose.QSConstants.TILE_USER;
+import static com.android.internal.util.ose.QSConstants.TILE_VOLUME;
+import static com.android.internal.util.ose.QSConstants.TILE_WIFI;
+import static com.android.internal.util.ose.QSConstants.TILE_WIFIAP;
+import static com.android.internal.util.ose.QSConstants.TILE_REBOOT;
 
 import android.content.BroadcastReceiver;
 import android.content.ContentResolver;
@@ -75,6 +111,7 @@ import com.android.systemui.quicksettings.BatteryTile;
 import com.android.systemui.quicksettings.BluetoothTile;
 import com.android.systemui.quicksettings.BrightnessTile;
 import com.android.systemui.quicksettings.BugReportTile;
+import com.android.systemui.quicksettings.CustomTile;
 import com.android.systemui.quicksettings.ExpandedDesktopTile;
 import com.android.systemui.quicksettings.LocationTile;
 import com.android.systemui.quicksettings.InputMethodTile;
@@ -246,6 +283,8 @@ public class QuickSettingsController {
                 qs = new ThemeTile(mContext, this);
             } else if (tile.equals(TILE_QUICKRECORD)) {
                 qs = new QuickRecordTile(mContext, this);
+            } else if (tile.contains(TILE_CUSTOM)) {
+                qs = new CustomTile(mContext, this, findCustomKey(tile));
             }
 
             if (qs != null) {
@@ -290,6 +329,11 @@ public class QuickSettingsController {
             }
         }
 
+    }
+
+    private String findCustomKey (String tile) {
+        String[] split = tile.split(TILE_CUSTOM_KEY);
+        return split[1];
     }
 
     public void shutdown() {
