@@ -3190,6 +3190,12 @@ public final class Settings {
         public static final String NOTIFICATION_SHORTCUTS_CONFIG = "notification_shortcuts_config";
 
         /**
+         * Disable FC Notifications
+         * @hide
+         */
+        public static final String DISABLE_FC_NOTIFICATIONS = "disable_fc_notifications";
+
+        /**
          * Stores the value for notification shortcuts icon color
          * @hide
          */
