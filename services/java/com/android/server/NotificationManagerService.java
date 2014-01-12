@@ -81,6 +81,7 @@ import com.android.internal.R;
 
 import com.android.internal.notification.NotificationScorer;
 import com.android.internal.util.ose.QuietHoursHelper;
+import com.android.internal.util.FastXmlSerializer;
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 
@@ -1305,11 +1306,11 @@ public class NotificationManagerService extends INotificationManager.Stub
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.QUIET_HOURS_DIM),
                     false, this, UserHandle.USER_ALL);
-
             update(null);
         }
 
-        @Override public void onChange(boolean selfChange, Uri uri) {
+        @Override
+        public void onChange(boolean selfChange, Uri uri) {
             update(uri);
             updateNotificationPulse();
         }
