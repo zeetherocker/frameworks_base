@@ -1427,4 +1427,8 @@
          for "perf_profile_values" array. Leave it blank if the device do not support
          performance profiles  -->
     <string name="config_perf_profile_default_entry" translatable="false"></string>
+
+    <!-- Set to empty string to disable. Can be added to device overlay for device-specific path -->
+    <string name="config_fastChargePath" translatable="false">/sys/kernel/fast_charge/force_fast_charge</string>
+
 </resources>

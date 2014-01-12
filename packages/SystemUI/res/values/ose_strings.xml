@@ -271,4 +271,8 @@
     <!-- Screen record notification error title -->
     <string name="screenrecord_notif_error">Unable to record screen</string>
 
+    <!-- QuickSettings: Fast Charge -->
+    <string name="quick_settings_fcharge_on_label">Fast charge</string>
+    <string name="quick_settings_fcharge_off_label">Disabled</string>
+
 </resources>

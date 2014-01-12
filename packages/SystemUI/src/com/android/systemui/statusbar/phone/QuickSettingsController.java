@@ -55,6 +55,7 @@ import static com.android.internal.util.ose.QSConstants.TILE_WIFIAP;
 import static com.android.internal.util.ose.QSConstants.TILE_REBOOT;
 import static com.android.internal.util.ose.QSConstants.TILE_WEATHER;
 import static com.android.internal.util.ose.QSConstants.TILE_INTERNALMEMORY;
+import static com.android.internal.util.ose.QSConstants.TILE_FCHARGE;
 
 import android.app.Activity;
 import android.app.ActivityManagerNative;
@@ -118,6 +119,7 @@ import com.android.systemui.quicksettings.WiFiTile;
 import com.android.systemui.quicksettings.WifiAPTile;
 import com.android.systemui.quicksettings.RebootTile;
 import com.android.systemui.quicksettings.Weather;
+import com.android.systemui.quicksettings.FastChargeTile;
 import com.android.systemui.R;
 
 import java.io.File;
@@ -275,6 +277,8 @@ public class QuickSettingsController {
                 WeatherDialog();
             } else if (tile.equals(TILE_INTERNALMEMORY)) {
                 qs = new InternalMemory(mContext, this);
+            } else if (tile.contains(TILE_FCHARGE)) {
+                qs = new FastChargeTile(mContext, this);
             }
 
             if (qs != null) {
