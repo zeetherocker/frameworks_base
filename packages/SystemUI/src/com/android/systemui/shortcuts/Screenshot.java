@@ -17,8 +17,8 @@
 package com.android.systemui.shortcuts;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 
 import com.android.internal.util.ose.ButtonsConstants;
 import com.android.internal.util.ose.OSEActions;
@@ -33,8 +33,14 @@ public class Screenshot extends Activity  {
     @Override
     public void onResume() {
         super.onResume();
-        OSEActions.processAction(
-                this, ButtonsConstants.ACTION_SCREENSHOT, false);
-        this.finish();
+        Handler handle = new Handler();
+        // Allow statusbar to collapse if desired
+        handle.postDelayed(new Runnable() {
+            public void run() {
+                OSEActions.processActionWithOptions(Screenshot.this,
+                        ButtonsConstants.ACTION_SCREENSHOT, false, false);
+                Screenshot.this.finish();
+            }
+        }, 500);
     }
 }

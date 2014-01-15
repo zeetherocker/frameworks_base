@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 OSE Project
+ * Copyright 2013 OSE Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,12 +17,12 @@
 package com.android.systemui.shortcuts;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
-import android.os.UserHandle;
-import android.provider.Settings;
 
-public class Immersive extends Activity  {
+import com.android.internal.util.ose.ButtonsConstants;
+import com.android.internal.util.ose.OSEActions;
+
+public class PowerMenu extends Activity  {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -32,19 +32,7 @@ public class Immersive extends Activity  {
     @Override
     public void onResume() {
         super.onResume();
-        int value = getIntent().getIntExtra("value", 2);
-
-        if (value == 2) {
-            value = Settings.System.getIntForUser(
-                    getContentResolver(),
-                    Settings.System.EXPANDED_DESKTOP_STATE,
-                    0, UserHandle.USER_CURRENT_OR_SELF) == 1 ? 0 : 1;
-        }
-
-        Settings.System.putIntForUser(
-                getContentResolver(),
-                Settings.System.EXPANDED_DESKTOP_STATE,
-                value, UserHandle.USER_CURRENT_OR_SELF);
+        OSEActions.processAction(this, ButtonsConstants.ACTION_POWER_MENU, false);
         this.finish();
     }
 }

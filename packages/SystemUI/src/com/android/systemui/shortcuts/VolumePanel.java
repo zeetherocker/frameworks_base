@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 OSE Project
+ * Copyright 2013 SlimRom
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,12 +17,16 @@
 package com.android.systemui.shortcuts;
 
 import android.app.Activity;
-import android.content.Intent;
+import android.content.Context;
+import android.media.AudioManager;
 import android.os.Bundle;
-import android.os.UserHandle;
-import android.provider.Settings;
+import android.os.PowerManager;
+import android.os.RemoteException;
+import android.os.ServiceManager;
 
-public class Immersive extends Activity  {
+import com.android.internal.statusbar.IStatusBarService;
+
+public class VolumePanel extends Activity  {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -32,19 +36,15 @@ public class Immersive extends Activity  {
     @Override
     public void onResume() {
         super.onResume();
-        int value = getIntent().getIntExtra("value", 2);
-
-        if (value == 2) {
-            value = Settings.System.getIntForUser(
-                    getContentResolver(),
-                    Settings.System.EXPANDED_DESKTOP_STATE,
-                    0, UserHandle.USER_CURRENT_OR_SELF) == 1 ? 0 : 1;
+        try {
+            IStatusBarService sb = IStatusBarService.Stub.asInterface(ServiceManager
+                    .getService(Context.STATUS_BAR_SERVICE));
+            sb.collapsePanels();
+        } catch (RemoteException e) {
+            // Oh no
         }
-
-        Settings.System.putIntForUser(
-                getContentResolver(),
-                Settings.System.EXPANDED_DESKTOP_STATE,
-                value, UserHandle.USER_CURRENT_OR_SELF);
+        AudioManager am = (AudioManager) this.getSystemService(Context.AUDIO_SERVICE);
+        am.adjustVolume(AudioManager.ADJUST_SAME, AudioManager.FLAG_SHOW_UI);
         this.finish();
     }
 }
