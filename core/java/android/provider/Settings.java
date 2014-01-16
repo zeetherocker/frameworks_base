@@ -3577,6 +3577,20 @@ public final class Settings {
         public static final String KEY_HOME_LONG_PRESS_ACTION = "key_home_long_press_action";
 
         /**
+         * Should Dialer suggest nearby phone numbers
+         *
+         * @hide
+         */
+        public static final String ENABLE_DIALER_SUGGESTIONS = "enable_dialer_suggestions";
+
+        /**
+         * Should Dialer reverse look up names for unknown phone numbers
+         *
+         * @hide
+         */
+        public static final String ENABLE_DIALER_REVERSE_LOOKUP = "enable_dialer_reverse_lookup";
+
+        /**
          * Action to perform when the home key is double taped. (default: ACTION_NULL)
          * (See ButtonsConstants.java for valid values)
          * @hide
