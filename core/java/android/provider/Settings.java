@@ -4326,6 +4326,12 @@ public final class Settings {
         public static final String HALO_ENABLED = "halo_enabled";
 
         /**
+         * HALO color, default is 0xff33b5e5 (normal)
+         * @hide
+         */
+        public static final String HALO_COLOR = "halo_color";
+
+        /**
          * If On-The-Go should be displayed at the power menu.
          *
          * @hide
