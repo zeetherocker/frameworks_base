@@ -2793,6 +2793,12 @@ public final class Settings {
         public static final String STATUS_BAR_CLOCK = "status_bar_clock";
 
         /**
+         * Allows to show the background activity back the lockscreen
+         * @hide
+         */
+        public static final String LOCKSCREEN_SEE_THROUGH = "lockscreen_see_through";
+
+        /**
          * AM/PM Style for clock options
          * 0 - Normal AM/PM
          * 1 - Small AM/PM
