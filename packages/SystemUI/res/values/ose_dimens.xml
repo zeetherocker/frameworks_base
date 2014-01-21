@@ -101,4 +101,11 @@
     <dimen name="default_notification_max_height">256dp</dimen>
     <dimen name="default_notification_row_min_height">70dp</dimen>
     <dimen name="default_notification_row_max_height">260dp</dimen>
+
+    <!-- Network traffic monitor single-line text size -->
+    <dimen name="net_traffic_single_text_size">12dp</dimen>
+
+    <!-- Network traffic monitor multi-line text size -->
+    <dimen name="net_traffic_multi_text_size">9dp</dimen>
+
 </resources>
