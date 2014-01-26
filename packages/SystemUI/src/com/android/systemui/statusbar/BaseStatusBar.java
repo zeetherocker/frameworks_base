@@ -1598,12 +1598,6 @@ public abstract class BaseStatusBar extends SystemUI implements
         }
     }
 
-    protected void addActiveDisplayView() {
-        mActiveDisplayView = (ActiveDisplayView)View.inflate(mContext, R.layout.active_display, null);
-        mActiveDisplayView.setStatusBar(this);
-        mWindowManager.addView(mActiveDisplayView, getActiveDisplayViewLayoutParams());
-    }
-
     protected void propagateMenuVisibility(boolean showMenu) {
         for (NavigationBarCallback callback : mNavigationCallbacks) {
             callback.setMenuVisibility(showMenu);
@@ -1636,6 +1630,24 @@ public abstract class BaseStatusBar extends SystemUI implements
         }
         lp.gravity = Gravity.TOP | Gravity.FILL_VERTICAL | Gravity.FILL_HORIZONTAL;
         lp.setTitle("ActiveDisplayView");
+
+        return lp;
+    }
+
+    protected void addActiveDisplayView() {
+        mActiveDisplayView = (ActiveDisplayView)View.inflate(mContext, R.layout.active_display, null);
+        int activeDisplayVis = View.SYSTEM_UI_FLAG_LOW_PROFILE
+                             | View.SYSTEM_UI_FLAG_FULLSCREEN
+                             | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                             | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION;
+        setSystemUIVisibility(mActiveDisplayView, activeDisplayVis);
+        mActiveDisplayView.setStatusBar(this);
+        mWindowManager.addView(mActiveDisplayView, getActiveDisplayViewLayoutParams());
+    }
+
+    protected void removeActiveDisplayView() {
+        if (mActiveDisplayView != null)
+            mWindowManager.removeView(mActiveDisplayView);
     }
 
     // Pie Controls
@@ -1899,23 +1911,10 @@ public abstract class BaseStatusBar extends SystemUI implements
         lp.gravity = Gravity.TOP | gravity;
         lp.setTitle("GestureAnywhereView");
 
+        return lp;
+    }
+
     protected static void setSystemUIVisibility(View v, int visibility) {
         v.setSystemUiVisibility(visibility);
-    }
-
-    protected void addActiveDisplayView() {
-        mActiveDisplayView = (ActiveDisplayView)View.inflate(mContext, R.layout.active_display, null);
-        int activeDisplayVis = View.SYSTEM_UI_FLAG_LOW_PROFILE
-                             | View.SYSTEM_UI_FLAG_FULLSCREEN
-                             | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
-                             | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION;
-        setSystemUIVisibility(mActiveDisplayView, activeDisplayVis);
-        mActiveDisplayView.setStatusBar(this);
-        mWindowManager.addView(mActiveDisplayView, getActiveDisplayViewLayoutParams());
-    }
-
-    protected void removeActiveDisplayView() {
-        if (mActiveDisplayView != null)
-            mWindowManager.removeView(mActiveDisplayView);
     }
 }
