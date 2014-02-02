@@ -205,7 +205,7 @@ interface IWindowManager
     void thawRotation();
 
     /**
-     * Gets whether the rotation is frozen. 
+     * Gets whether the rotation is frozen.
      *
      * @return Whether the rotation is frozen.
      */
@@ -313,11 +313,6 @@ interface IWindowManager
      */
     int getCurrentNavigationBarSize();
 
-    /**
-     * @hide
-     */
-    void updateSettings();
-
     /** SPLIT VIEW **/
     boolean isTaskSplitView(int taskId);
     void setTaskSplitView(int taskId, boolean split);
@@ -327,4 +322,11 @@ interface IWindowManager
     void setSplitViewRect(int l, int t, int r, int b);
 
     /** SPLIT VIEW END **/
+
+    /**
+     * Toggle global menu
+     *
+     * @hide
+     */
+    void toggleGlobalMenu();
 }

@@ -1244,8 +1244,10 @@ public interface WindowManagerPolicy {
     public boolean isImmersiveMode(int vis);
 
     /**
+     * Toggle global menu
+     *
      * @hide
      */
-    public void updateSettings();
+    public void toggleGlobalMenu();
 
 }
