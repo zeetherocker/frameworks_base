@@ -320,6 +320,11 @@ interface IWindowManager
      */
     void toggleGlobalMenu();
 
+    /**
+     * @hide
+     */
+    void updateSettings();
+
     /** SPLIT VIEW **/
     boolean isTaskSplitView(int taskId);
     void setTaskSplitView(int taskId, boolean split);
@@ -329,4 +334,5 @@ interface IWindowManager
     void setSplitViewRect(int l, int t, int r, int b);
 
     /** SPLIT VIEW END **/
+
 }
