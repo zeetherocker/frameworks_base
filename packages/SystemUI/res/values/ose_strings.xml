@@ -243,4 +243,13 @@
     <string name="weather_46">Snow Showers</string>
     <string name="weather_47">Isolated Thundershowers</string>
 
+    <!-- Recent apps -->
+    <string name="recent_title_txt">Recent apps</string>
+
+    <!-- Title shown in recents popup for locking an app from being cleared -->
+    <string name="status_bar_recent_lock_item_title">Lock</string>
+
+    <!-- Title shown in recents popup for unlocking an app from being cleared -->
+    <string name="status_bar_recent_unlock_item_title">Unlock</string>
+
 </resources>
