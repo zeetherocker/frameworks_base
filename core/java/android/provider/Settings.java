@@ -3221,6 +3221,18 @@ public final class Settings {
         public static final String STATUSBAR_BATTERY_BAR_ANIMATE = "statusbar_battery_bar_animate";
 
         /**
+         * Enable touches in screen recording
+         * @hide
+         */
+        public static final String SREC_ENABLE_TOUCHES = "srec_enable_touches";
+
+        /**
+         * Enable microphone as audio input in screen recording
+         * @hide
+         */
+        public static final String SREC_ENABLE_MIC = "srec_enable_mic";
+
+        /**
          * Enable looking up of phone numbers of nearby places
          *
          * @hide
