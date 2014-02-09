@@ -335,4 +335,10 @@ interface IWindowManager
 
     /** SPLIT VIEW END **/
 
+    /**
+     * Toggle statusbar on expanded desktop
+     *
+     * @hide
+     */
+    void toggleStatusBar();
 }
