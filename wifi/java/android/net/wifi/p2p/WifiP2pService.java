@@ -2667,6 +2667,7 @@ public class WifiP2pService extends IWifiP2pManager.Stub {
             boolean peersChanged = mPeers.remove(mPeersLostDuringConnection);
             if (mPeers.remove(mSavedPeerConfig.deviceAddress) != null) {
                 peersChanged = true;
+                mWifiNative.p2pFlush();
             }
             if (peersChanged) {
                 sendPeersChangedBroadcast();
