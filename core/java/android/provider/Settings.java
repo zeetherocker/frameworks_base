@@ -3086,6 +3086,13 @@ public final class Settings {
         public static final String FORWARD_LOOKUP_PROVIDER = "forward_lookup_provider";
 
         /**
+        *
+        * SMOOTH PROGRESS BAR interpolator
+        * @hide
+        */
+        public static final String PROGRESSBAR_INTERPOLATOR = "progressbar_interpolator";
+
+        /**
          * The reverse lookup provider
          *
          * @hide
