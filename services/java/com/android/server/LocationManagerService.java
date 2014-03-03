@@ -1079,7 +1079,7 @@ public class LocationManagerService extends ILocationManager.Stub {
     public List<String> getProviders(Criteria criteria, boolean enabledOnly) {
         int allowedResolutionLevel = getCallerAllowedResolutionLevel();
         ArrayList<String> out;
-        int uid = Binder.getCallingUid();;
+        int uid = Binder.getCallingUid();
         long identity = Binder.clearCallingIdentity();
         try {
             synchronized (mLock) {
@@ -1475,7 +1475,7 @@ public class LocationManagerService extends ILocationManager.Stub {
                         packageName, workSource, hideFromAppOps);
                 if (receiver != null) {
                         requestLocationUpdatesLocked(sanitizedRequest, receiver, pid,
-                                                     uid, packageName);
+                            uid, packageName);
                 }
             }
         } finally {
