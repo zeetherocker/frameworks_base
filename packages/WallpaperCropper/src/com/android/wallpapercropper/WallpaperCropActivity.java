@@ -704,6 +704,23 @@ public class WallpaperCropActivity extends Activity {
                                     roundedTrueCrop.right, (int) mCropBounds.bottom);
                         }
 
+                        // Adjust values to account for issues related to rounding
+                        if (roundedTrueCrop.width() > fullSize.getWidth()) {
+                            // Adjust the width
+                            roundedTrueCrop.right = roundedTrueCrop.left + fullSize.getWidth();
+                        }
+                        if (roundedTrueCrop.right > fullSize.getWidth()) {
+                            // Adjust the left value
+                            int adjustment = roundedTrueCrop.left -
+                                    Math.max(0, roundedTrueCrop.right - roundedTrueCrop.width());
+                            roundedTrueCrop.left -= adjustment;
+                            roundedTrueCrop.right -= adjustment;
+                        }
+                        if (roundedTrueCrop.bottom > mCropBounds.bottom) {
+                            roundedTrueCrop.set(roundedTrueCrop.left, roundedTrueCrop.top,
+                                    roundedTrueCrop.right, (int) mCropBounds.bottom);
+                        }
+
                         crop = Bitmap.createBitmap(fullSize, roundedTrueCrop.left,
                                 roundedTrueCrop.top, roundedTrueCrop.width(),
                                 roundedTrueCrop.height());
