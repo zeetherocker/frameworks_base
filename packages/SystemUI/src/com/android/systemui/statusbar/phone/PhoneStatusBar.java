@@ -29,6 +29,8 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.ObjectAnimator;
 import android.animation.TimeInterpolator;
+import android.annotation.ChaosLab;
+import android.annotation.ChaosLab.Classification;
 import android.app.ActivityManager;
 import android.app.ActivityManagerNative;
 import android.app.Notification;
@@ -684,6 +686,8 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
                 UserHandle.USER_CURRENT) == 1;
     }
 
+    @ChaosLab(name="GestureAnywhere", classification=Classification.CHANGE_CODE)
+
     private boolean isExpanded() {
         return Settings.System.getIntForUser(mContext.getContentResolver(),
                 Settings.System.EXPANDED_DESKTOP_STATE, 0,
@@ -1058,6 +1062,9 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
 
         if (!mRecreating) {
             removeSidebarView();
+            /* ChaosLab: GestureAnywhere - BEGIN */
+            addGestureAnywhereView();
+            /* ChaosLab: GestureAnywhere - END */
         }
 
         addSidebarView();
