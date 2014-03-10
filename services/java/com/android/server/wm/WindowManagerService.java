@@ -3497,8 +3497,9 @@ public class WindowManagerService extends IWindowManager.Stub
             Task newTask = mTaskIdToTask.get(groupId);
             if (newTask == null) {
                 newTask = createTask(groupId, oldTask.mStack.mStackId, oldTask.mUserId, atoken);
+            } else {
+                newTask.mAppTokens.add(atoken);
             }
-            newTask.mAppTokens.add(atoken);
         }
     }
 
@@ -11495,4 +11496,10 @@ public class WindowManagerService extends IWindowManager.Stub
     }
 
     /** END SPLIT VIEW **/
+
+    @Override
+    public int getSystemUIVisibility() {
+        return mLastStatusBarVisibility;
+    }
+
 }
