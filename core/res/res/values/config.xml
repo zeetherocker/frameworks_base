@@ -1405,4 +1405,23 @@
     <string-array name="config_telephony_set_audioparameters" translatable="false">
     </string-array>
 
+    <!-- Vibrator pattern to be used as for notifications while alerts
+         are disabled (e.g. during phone calls) if enabled by the user.
+     -->
+    <integer-array name="config_notificationNoAlertsVibePattern">
+        <item>0</item>
+        <item>50</item>
+        <item>100</item>
+        <item>50</item>
+    </integer-array>
+
+    <!-- Defines the system property to set for performance profile xe: sys.cpu.modes. Leave it
+         blank if the device do not support performance profiles -->
+    <string name="config_perf_profile_prop" translatable="false"></string>
+
+    <!-- When config_perf_profile_prop is defined, this value MUST be the index of
+         one of the listes values in frameworks/base/core/res/res/values/cm_arrays.xml
+         for "perf_profile_values" array. Leave it blank if the device do not support
+         performance profiles  -->
+    <string name="config_perf_profile_default_entry" translatable="false"></string>
 </resources>
