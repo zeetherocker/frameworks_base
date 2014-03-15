@@ -4356,11 +4356,24 @@ public final class Settings {
         public static final String ON_THE_GO_CAMERA = "on_the_go_camera";
 
         /**
+         * Whether the service should restart itself or not.
+         *
+         * @hide
+         */
+        public static final String ON_THE_GO_SERVICE_RESTART = "on_the_go_service_restart";
+
+        /**
          * Whether or not to use the app sidebar
          *
          * @hide
          */
         public static final String APP_SIDEBAR_ENABLED = "app_sidebar_enabled";
+
+         /**
+         * Disable profiles from powermenu even if still turned on
+         * @hide
+         */
+        public static final String SHOW_PROFILES = "show_profiles";
 
         /**
          * User defined transparency level for sidebar
