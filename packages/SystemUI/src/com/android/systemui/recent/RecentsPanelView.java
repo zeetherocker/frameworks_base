@@ -130,22 +130,10 @@ public class RecentsPanelView extends FrameLayout implements OnItemClickListener
     private int mDragPositionY;
 
     private ImageView mClearRecents;
-    private LinearColorBar mRamUsageBar;
     private ImageView mRJingles;
     private AnimationDrawable frameJingles;
 
     private static Set<Integer> sLockedTasks = new HashSet<Integer>();
-
-    private long mFreeMemory;
-    private long mTotalMemory;
-    private long mCachedMemory;
-    private long mActiveMemory;
-
-    TextView mUsedMemText;
-    TextView mFreeMemText;
-    TextView mRamText;
-
-    MemInfoReader mMemInfoReader = new MemInfoReader();
 
     public static interface RecentsScrollView {
         public int numItemsInOneScreenful();
@@ -570,7 +558,6 @@ public class RecentsPanelView extends FrameLayout implements OnItemClickListener
 
         mRecentsScrim = findViewById(R.id.recents_bg_protect);
         mRecentsNoApps = findViewById(R.id.recents_no_apps);
-	    //mRecentsRamBar = findViewById(R.id.recents_ram_bar);
 
         mRJingles = (ImageView) findViewById(R.id.recents_jingles);
         mRJingles.setBackgroundResource(R.drawable.recents_jingles_animation);
@@ -622,7 +609,6 @@ public class RecentsPanelView extends FrameLayout implements OnItemClickListener
                 ((BitmapDrawable) mRecentsScrim.getBackground()).setTileModeY(TileMode.REPEAT);
             }
         }
-	    updateRamBar();
     }
 
     /**
@@ -833,7 +819,6 @@ public class RecentsPanelView extends FrameLayout implements OnItemClickListener
             mRecentTasksLoader.cancelLoadingThumbnailsAndIcons(this);
             onTaskLoadingCancelled();
         }
-	    updateRamBar();
     }
 
     public void onTaskLoadingCancelled() {
@@ -842,14 +827,12 @@ public class RecentsPanelView extends FrameLayout implements OnItemClickListener
             mRecentTaskDescriptions = null;
             mListAdapter.notifyDataSetInvalidated();
         }
-	    updateRamBar();
     }
 
     public void refreshViews() {
         mListAdapter.notifyDataSetInvalidated();
         updateUiElements();
         showIfReady();
-	    updateRamBar();
     }
 
     public void refreshRecentTasksList() {
@@ -997,7 +980,6 @@ public class RecentsPanelView extends FrameLayout implements OnItemClickListener
             sendAccessibilityEvent(AccessibilityEvent.TYPE_VIEW_SELECTED);
             setContentDescription(null);
         }
-	    updateRamBar();
     }
 
     private void startApplicationDetailsActivity(String packageName) {
@@ -1113,7 +1095,7 @@ public class RecentsPanelView extends FrameLayout implements OnItemClickListener
         final PopupMenu popup =
             new PopupMenu(mContext, anchorView == null ? selectedView : anchorView);
         mPopup = popup;
-        popup.getMenuInflater().inflate(R.menu.recent_popup_menu, popup.getMenu());
+        popup.getMenuInflater().inflate(R.menu.recent_popup_menu_split, popup.getMenu());
 
 	    final ViewHolder viewHolder = (ViewHolder) selectedView.getTag();
 
@@ -1254,157 +1236,6 @@ public class RecentsPanelView extends FrameLayout implements OnItemClickListener
 
     class FakeClearUserDataObserver extends IPackageDataObserver.Stub {
         public void onRemoveCompleted(final String packageName, final boolean succeeded) {
-        }
-    }
-
-    private void updateRamBar() {
-        mRamUsageBar = (LinearColorBar) findViewById(R.id.ram_usage_bar);
-
-        int mRamBarMode = (Settings.System.getInt(mContext.getContentResolver(),
-                             Settings.System.RECENTS_RAM_BAR_MODE, 0));
-
-        if (mRamBarMode != 0 && mRamUsageBar != null) {
-
-            long usedMem = 0;
-            long freeMem = 0;
-
-                mRamUsageBar.setVisibility(View.VISIBLE);
-                updateMemoryInfo();
-
-                switch (mRamBarMode) {
-                    case 1:
-                        usedMem = mActiveMemory;
-                        freeMem = mTotalMemory - mActiveMemory;
-                        break;
-                    case 2:
-                        usedMem = mActiveMemory + mCachedMemory;
-                        freeMem = mTotalMemory - mActiveMemory - mCachedMemory;
-                        break;
-                    case 3:
-                        usedMem = mTotalMemory - mFreeMemory;
-                        freeMem = mFreeMemory;
-                        break;
-                }
-
-            mUsedMemText = (TextView)findViewById(R.id.usedMemText);
-            mFreeMemText = (TextView)findViewById(R.id.freeMemText);
-            mRamText = (TextView)findViewById(R.id.ramText);
-            mUsedMemText.setText(getResources().getString(
-                    R.string.service_used_mem, usedMem + " MB"));
-            mFreeMemText.setText(getResources().getString(
-                    R.string.service_free_mem, freeMem + " MB"));
-            mRamText.setText(getResources().getString(
-                    R.string.memory));
-            float totalMem = mTotalMemory;
-            float totalShownMem = (mTotalMemory - mFreeMemory - mCachedMemory - mActiveMemory)/ totalMem;
-            float totalActiveMem = mActiveMemory / totalMem;
-            float totalCachedMem = mCachedMemory / totalMem;
-            mRamUsageBar.setRatios(totalShownMem, totalCachedMem, totalActiveMem);
-
-            mRamUsageBar.setOnClickListener(new OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent intent = new Intent();
-                    intent.setComponent(new ComponentName(
-                            "com.android.settings",
-                            "com.android.settings.RunningServices"));
-
-                    try {
-                        // Dismiss the lock screen when Settings starts.
-                        ActivityManagerNative.getDefault().dismissKeyguardOnNextActivity();
-                    } catch (RemoteException e) {
-                    }
-                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK
-                            | Intent.FLAG_ACTIVITY_MULTIPLE_TASK
-                            | Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS
-                            | Intent.FLAG_ACTIVITY_NO_HISTORY);
-                    mContext.startActivityAsUser(intent, new UserHandle(UserHandle.USER_CURRENT));
-                }
-            });
-
-            mRamUsageBar.setOnLongClickListener(new OnLongClickListener() {
-                @Override
-                public boolean onLongClick(View v) {
-                    Intent intent = new Intent();
-                    intent.setComponent(new ComponentName(
-                            "com.android.settings",
-                            "com.android.settings.Settings$RamBarActivity"));
-
-                    try {
-                        // Dismiss the lock screen when Settings starts.
-                        ActivityManagerNative.getDefault().dismissKeyguardOnNextActivity();
-                    } catch (RemoteException e) {
-                    }
-                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK
-                            | Intent.FLAG_ACTIVITY_MULTIPLE_TASK
-                            | Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS
-                            | Intent.FLAG_ACTIVITY_NO_HISTORY);
-                    mContext.startActivityAsUser(intent, new UserHandle(UserHandle.USER_CURRENT));
-                    return true;
-                }
-            });
-
-        } else if (mRamUsageBar != null) {
-            mRamUsageBar.setVisibility(View.GONE);
-        }
-    }
-
-    private void updateMemoryInfo() {
-        long result = 0;
-        try {
-            String firstLine = readLine("/proc/meminfo", 1);
-            if (firstLine != null) {
-                String parts[] = firstLine.split("\\s+");
-                if (parts.length == 3) {
-                    result = Long.parseLong(parts[1])/1024;
-                }
-            }
-        } catch (IOException e) {}
-        mTotalMemory = result;
-
-        try {
-            String firstLine = readLine("/proc/meminfo", 2);
-            if (firstLine != null) {
-                String parts[] = firstLine.split("\\s+");
-                if (parts.length == 3) {
-                    result = Long.parseLong(parts[1])/1024;
-                }
-            }
-        } catch (IOException e) {}
-        mFreeMemory = result;
-
-        try {
-            String firstLine = readLine("/proc/meminfo", 6);
-            if (firstLine != null) {
-                String parts[] = firstLine.split("\\s+");
-                if (parts.length == 3) {
-                    result = Long.parseLong(parts[1])/1024;
-                }
-            }
-        } catch (IOException e) {}
-        mActiveMemory = result;
-
-        try {
-            String firstLine = readLine("/proc/meminfo", 4);
-            if (firstLine != null) {
-                String parts[] = firstLine.split("\\s+");
-                if (parts.length == 3) {
-                    result = Long.parseLong(parts[1])/1024;
-                }
-            }
-        } catch (IOException e) {}
-        mCachedMemory = result;
-    }
-
-    private static String readLine(String filename, int line) throws IOException {
-        BufferedReader reader = new BufferedReader(new FileReader(filename), 256);
-        try {
-            for(int i = 1; i < line; i++) {
-                reader.readLine();
-            }
-            return reader.readLine();
-        } finally {
-            reader.close();
         }
     }
 
