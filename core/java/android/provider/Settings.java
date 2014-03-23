@@ -3189,6 +3189,9 @@ public final class Settings {
          */
         public static final String SCREEN_STATE_GPS = "screen_state_gps";
 
+        /** @hide */
+        public static final String CUSTOM_STATUS_BAR_APPLY = "custom_status_bar_apply";
+
         /**
          * @hide
          */
