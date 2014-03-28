@@ -53,6 +53,7 @@ public class AppCircleSidebar extends FrameLayout implements PackageAdapter.OnCi
     private boolean mFloatingWindow = false;
     private SettingsObserver mSettingsObserver;
     private ArrayList<String> mAppRunning;
+    private ArrayList<String> mAppOpening;
 
     private PopupMenu mPopup;
     private WindowManager mWM;
@@ -83,6 +84,13 @@ public class AppCircleSidebar extends FrameLayout implements PackageAdapter.OnCi
         filter.addAction(ACTION_HIDE_APP_CONTAINER);
         mContext.registerReceiver(mBroadcastReceiver, filter);
 
+        filter = new IntentFilter();
+        filter.addAction(Intent.ACTION_PACKAGE_ADDED);
+        filter.addAction(Intent.ACTION_PACKAGE_REMOVED);
+        filter.addAction(Intent.ACTION_PACKAGE_CHANGED);
+        filter.addDataScheme("package");
+        getContext().registerReceiver(mAppChangeReceiver, filter);
+
         mCircleListView = (CircleListView) findViewById(R.id.circle_list);
         mPackageAdapter = new PackageAdapter(mContext);
         mPackageAdapter.setOnCircleItemClickListener(this);
@@ -94,6 +102,7 @@ public class AppCircleSidebar extends FrameLayout implements PackageAdapter.OnCi
         createAnimatimations();
         mSettingsObserver = new SettingsObserver(new Handler());
         mAppRunning = new ArrayList<String>();
+        mAppOpening = new ArrayList<String>();
     }
 
     @Override
@@ -352,6 +361,20 @@ public class AppCircleSidebar extends FrameLayout implements PackageAdapter.OnCi
         }
     }
 
+    private final BroadcastReceiver mAppChangeReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String action = intent.getAction();
+            if (action.equals(Intent.ACTION_PACKAGE_ADDED)
+                    || action.equals(Intent.ACTION_PACKAGE_REMOVED)
+                    || action.equals(Intent.ACTION_PACKAGE_CHANGED)) {
+                if (mPackageAdapter != null) {
+                    mPackageAdapter.reloadApplications();
+                }
+            }
+        }
+    };
+
     private final BroadcastReceiver mBroadcastReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -369,22 +392,25 @@ public class AppCircleSidebar extends FrameLayout implements PackageAdapter.OnCi
                 String packageName = intent.getStringExtra("packagename");
                 if (!mAppRunning.isEmpty() && mAppRunning.contains(packageName)) {
                     mAppRunning.remove(packageName);
+                } else if (!mAppOpening.isEmpty() && mAppOpening.contains(packageName)) {
+                    mAppRunning.remove(packageName);
                 }
             }
         }
     };
 
     private void launchApplication(String packageName, String className) {
+        if (!mAppOpening.contains(packageName)) {
+            mAppOpening.add(packageName);
+        }
         updateAutoHideTimer(500);
         ComponentName cn = new ComponentName(packageName, className);
-        Intent intent = new Intent(Intent.ACTION_MAIN);
-        intent.addCategory(Intent.CATEGORY_LAUNCHER);
+        Intent intent = Intent.makeMainActivity(cn);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         if (mFloatingWindow) {
             intent.addFlags(Intent.FLAG_FLOATING_WINDOW);
             mFloatingWindow = false;
         }
-        intent.setComponent(cn);
         mContext.startActivity(intent);
     }
 
@@ -404,8 +430,6 @@ public class AppCircleSidebar extends FrameLayout implements PackageAdapter.OnCi
             updateAutoHideTimer(AUTO_HIDE_DELAY);
             mFloatingWindow = false;
         }
-        intent.setComponent(cn);
-        mContext.startActivity(intent);
     }
 
     private void killApp(String packageName) {
@@ -415,7 +439,6 @@ public class AppCircleSidebar extends FrameLayout implements PackageAdapter.OnCi
     }
 
     public void onItemCentered(View v) {
-        updateAutoHideTimer(AUTO_HIDE_DELAY);
         if (v != null) {
             final int position = (Integer) v.getTag(R.id.key_position);
             final ResolveInfo info = (ResolveInfo) mPackageAdapter.getItem(position);
