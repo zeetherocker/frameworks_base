@@ -389,15 +389,19 @@ public class AppCircleSidebar extends FrameLayout implements PackageAdapter.OnCi
     }
 
     private void launchApplicationFromHistory(String packageName, String className) {
-        updateAutoHideTimer(500);
-        ComponentName cn = new ComponentName(packageName, className);
-        Intent intent = new Intent(Intent.ACTION_MAIN);
-        intent.addCategory(Intent.CATEGORY_LAUNCHER);
-        intent.setFlags(Intent.FLAG_ACTIVITY_LAUNCHED_FROM_HISTORY
-                        | Intent.FLAG_ACTIVITY_NEW_TASK
-                        | Intent.FLAG_ACTIVITY_NO_ANIMATION);
-        if (mFloatingWindow) {
-            intent.addFlags(Intent.FLAG_FLOATING_WINDOW);
+        if (!mAppOpening.isEmpty() && mAppOpening.contains(packageName)) {
+            updateAutoHideTimer(500);
+            ComponentName cn = new ComponentName(packageName, className);
+            Intent intent = Intent.makeMainActivity(cn);
+            intent.setFlags(Intent.FLAG_ACTIVITY_LAUNCHED_FROM_HISTORY
+                           | Intent.FLAG_ACTIVITY_NEW_TASK);
+            if (mFloatingWindow) {
+                intent.addFlags(Intent.FLAG_FLOATING_WINDOW);
+                mFloatingWindow = false;
+            }
+            mContext.startActivity(intent);
+        } else {
+            updateAutoHideTimer(AUTO_HIDE_DELAY);
             mFloatingWindow = false;
         }
         intent.setComponent(cn);
