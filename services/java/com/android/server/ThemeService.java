@@ -48,6 +48,7 @@ import android.os.Message;
 import android.os.RemoteCallbackList;
 import android.os.RemoteException;
 import android.os.SystemProperties;
+import android.os.UserHandle;
 import android.provider.Settings;
 import android.provider.ThemesContract;
 import android.text.TextUtils;
@@ -253,7 +254,6 @@ public class ThemeService extends IThemeService.Stub {
         }
     }
 
-
     private void updateProvider(List<String> components, String pkgName) {
         ContentValues values = new ContentValues();
         values.put(ThemesContract.MixnMatchColumns.COL_VALUE, pkgName);
@@ -454,7 +454,7 @@ public class ThemeService extends IThemeService.Stub {
 
     private boolean updateLockscreen() {
         boolean success = false;
-        if ("default".equals(mPkgName)) {
+        if (HOLO_DEFAULT.equals(mPkgName)) {
             WallpaperManager.getInstance(mContext).clearKeyguardWallpaper();
             success = true;
         } else {
@@ -462,7 +462,8 @@ public class ThemeService extends IThemeService.Stub {
         }
 
         if (success) {
-            mContext.sendBroadcast(new Intent(Intent.ACTION_KEYGUARD_WALLPAPER_CHANGED));
+            mContext.sendBroadcastAsUser(new Intent(Intent.ACTION_KEYGUARD_WALLPAPER_CHANGED),
+                    UserHandle.ALL);
         }
         return success;
     }
@@ -508,10 +509,24 @@ public class ThemeService extends IThemeService.Stub {
                         c.getColumnIndex(ThemesContract.ThemesColumns.IS_LEGACY_THEME)) == 1;
                 if (!isLegacyTheme) {
                     String wallpaper = c.getString(c.getColumnIndex(ThemesContract.ThemesColumns.WALLPAPER_URI));
-                    if (URLUtil.isAssetUrl(wallpaper)) {
-                        in = ThemeUtils.getInputStreamFromAsset(themeContext, wallpaper);
+                    if (wallpaper != null) {
+                        if (URLUtil.isAssetUrl(wallpaper)) {
+                            in = ThemeUtils.getInputStreamFromAsset(themeContext, wallpaper);
+                        } else {
+                            in = mContext.getContentResolver().openInputStream(Uri.parse(wallpaper));
+                        }
                     } else {
-                        in = mContext.getContentResolver().openInputStream(Uri.parse(wallpaper));
+                        // try and get the wallpaper directly from the apk if the URI was null
+                        Context themeCtx = mContext.createPackageContext(mPkgName,
+                                Context.CONTEXT_IGNORE_SECURITY);
+                        AssetManager assetManager = themeCtx.getAssets();
+                        String wpPath = ThemeUtils.getWallpaperPath(assetManager);
+                        if (wpPath == null) {
+                            Log.w(TAG, "Not setting wp because wallpaper file was not found.");
+                            return false;
+                        }
+                        in = ThemeUtils.getInputStreamFromAsset(themeCtx, "file:///android_asset/"
+                                + wpPath);
                     }
                     WallpaperManager.getInstance(mContext).setStream(in);
                 } else {
@@ -594,14 +609,6 @@ public class ThemeService extends IThemeService.Stub {
         }
     }
 
-    private void sleepQuiet(long ms) {
-        try {
-            Thread.sleep(ms);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-    }
-
     private void postProgress(String pkgName) {
         int N = mClients.beginBroadcast();
         for(int i=0; i < N; i++) {
@@ -634,7 +641,8 @@ public class ThemeService extends IThemeService.Stub {
 
         // if successful, broadcast that the theme changed
         if (isSuccess) {
-            mContext.sendBroadcast(new Intent(ThemeUtils.ACTION_THEME_CHANGED));
+            mContext.sendBroadcastAsUser(new Intent(ThemeUtils.ACTION_THEME_CHANGED),
+                    UserHandle.ALL);
         }
     }
 
