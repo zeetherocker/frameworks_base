@@ -2749,7 +2749,7 @@ public class Editor {
 
                 // Restore previous SuggestionSpans
                 final int realSuggestionLength = mTextView.getText().toString().length();
-                final int lengthDifference = realSuggestionLength - (spanEnd - spanStart);
+                int lengthDifference = suggestion.length() - (spanEnd - spanStart);
                 final int realSuggestionDiff = realSuggestionLength - (spanEnd - spanStart);
 
                 if (realSuggestionDiff < lengthDifference) {
