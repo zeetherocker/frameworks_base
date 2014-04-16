@@ -44,7 +44,6 @@ public class PackageAdapter extends BaseAdapter implements InputItemHandler.Inpu
         "com.android.browser",
         "com.android.camera2",
         "com.andrew.apollo",
-        "net.nurik.roman.dashclock",
         "com.android.contacts"
     };
 
