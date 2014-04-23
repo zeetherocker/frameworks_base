@@ -135,7 +135,7 @@
          your device's memory use without going to the point of causing applications to turn
          off features. -->
     <bool name="config_avoidGfxAccel">false</bool>
-    
+
     <!-- Whether to enable auto provisioning the app for new SIM card on boot.-->
     <bool name="config_auto_provision_enable">false</bool>
 
@@ -1446,11 +1446,5 @@
 
     <!-- Set to empty string to disable. Can be added to device overlay for device-specific path -->
     <string name="config_fastChargePath" translatable="false">/sys/kernel/fast_charge/force_fast_charge</string>
-
-    <!-- Integer to configure panel auto brightness mode when changed -->
-    <integer name="config_panelAutoBrightnessValue">-1</integer>
-
-    <!-- Device supports LED flashlight -->
-    <bool name="config_enableTorch">false</bool>
 
 </resources>

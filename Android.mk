@@ -396,7 +396,6 @@ aidl_files := \
 	frameworks/base/core/java/com/android/internal/view/IInputMethodClient.aidl \
 	frameworks/base/core/java/com/android/internal/view/IInputMethodManager.aidl \
 	frameworks/base/core/java/com/android/internal/view/IInputMethodSession.aidl \
-    frameworks/base/core/java/android/bluetooth/BluetoothLEServiceUuid.aidl  \
 	frameworks/base/graphics/java/android/graphics/Bitmap.aidl \
 	frameworks/base/graphics/java/android/graphics/Rect.aidl \
 	frameworks/base/graphics/java/android/graphics/Region.aidl \
