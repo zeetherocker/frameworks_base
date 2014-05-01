@@ -73,7 +73,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RemoteViews.OnClickHandler;
 
-import com.android.internal.util.slim.ShakeListener;
+import com.android.internal.util.ose.ShakeListener;
 
 import java.io.File;
 import java.lang.ref.WeakReference;
