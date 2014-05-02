@@ -18,6 +18,7 @@
 package com.android.keyguard;
 
 import android.graphics.Bitmap;
+import android.graphics.Bitmap.CompressFormat;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.TransitionDrawable;
@@ -39,8 +40,10 @@ import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.content.ContentResolver;
 import android.database.ContentObserver;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.ColorFilter;
+import android.graphics.Matrix;
 import android.graphics.PixelFormat;
 import android.graphics.PorterDuff;
 import android.graphics.Rect;
@@ -109,7 +112,7 @@ public class KeyguardViewManager {
     private boolean mScreenOn = false;
     private LockPatternUtils mLockPatternUtils;
 
-    private Drawable mCustomBackground = null;
+    private Bitmap mCustomImage = null;
     private int mBlurRadius = 14;
     private boolean mSeeThrough = false;
 
@@ -234,6 +237,12 @@ public class KeyguardViewManager {
     private boolean shouldEnableTranslucentDecor() {
         Resources res = mContext.getResources();
         return res.getBoolean(R.bool.config_enableLockScreenTranslucentDecor);
+    }
+
+    private void setCustomBackground(Bitmap bmp) {
+        mKeyguardHost.setCustomBackground( new BitmapDrawable(mContext.getResources(),
+                    bmp != null ? bmp : mCustomImage) );
+        updateShowWallpaper(bmp == null && mCustomImage == null);
     }
 
     public void setBackgroundBitmap(Bitmap bmp) {
@@ -424,7 +433,7 @@ public class KeyguardViewManager {
     }
 
     SparseArray<Parcelable> mStateContainer = new SparseArray<Parcelable>();
-
+    int mLastRotation = 0;
     private void maybeCreateKeyguardLocked(int rotationAngles, boolean force,
             Bundle options) {
         if (mKeyguardHost != null) {
@@ -488,10 +497,6 @@ public class KeyguardViewManager {
                 mKeyguardView.requestFocus();
         }
 
-        if(mCustomBackground != null) {
-            mKeyguardHost.setCustomBackground(mCustomBackground);
-        }
-
         updateUserActivityTimeoutInWindowLayoutParams();
         mViewManager.updateViewLayout(mKeyguardHost, mWindowLayoutParams);
 
@@ -514,6 +519,12 @@ public class KeyguardViewManager {
             setBackgroundBitmap(BitmapFactory.decodeFile(mWallpaperFile));
             mLoadWallpaper = false;
         }
+    }
+
+    private Bitmap rotateBmp(Bitmap bmp, int degrees) {
+        Matrix m = new Matrix();
+        m.postRotate(degrees);
+        return Bitmap.createBitmap(bmp, 0, 0, bmp.getWidth(), bmp.getHeight(), m, true);
     }
 
     private void inflateKeyguardView(Bundle options) {
