@@ -59,6 +59,7 @@ import static com.android.internal.util.ose.QSConstants.TILE_FCHARGE;
 import static com.android.internal.util.ose.QSConstants.TILE_ONTHEGO;
 import static com.android.internal.util.ose.QSConstants.TILE_SHAKE;
 import static com.android.internal.util.ose.QSConstants.TILE_BATTERYSAVER;
+import static com.android.internal.util.ose.QSConstants.TILE_EQUALIZER;
 
 import android.app.Activity;
 import android.app.ActivityManagerNative;
@@ -97,6 +98,7 @@ import com.android.systemui.quicksettings.BrightnessTile;
 import com.android.systemui.quicksettings.BugReportTile;
 import com.android.systemui.quicksettings.ContactTile;
 import com.android.systemui.quicksettings.CustomTile;
+import com.android.systemui.quicksettings.EqualizerTile;
 import com.android.systemui.quicksettings.ExpandedDesktopTile;
 import com.android.systemui.quicksettings.LocationTile;
 import com.android.systemui.quicksettings.InputMethodTile;
@@ -331,6 +333,8 @@ public class QuickSettingsController {
                 qs = new AlarmTile(mContext, this, mHandler);
             } else if (tile.equals(TILE_BUGREPORT)) {
                 qs = new BugReportTile(mContext, this, mHandler);
+            } else if (tile.equals(TILE_EQUALIZER)) {
+                qs = new EqualizerTile(mContext, this);
             } else if (tile.equals(TILE_IMESWITCHER)
                     && DeviceUtils.deviceSupportsImeSwitcher(mContext)) {
                 qs = new InputMethodTile(mContext, this);
@@ -482,6 +486,18 @@ public class QuickSettingsController {
         mContainerView.updateResources();
         for (QuickSettingsTile t : mQuickSettingsTiles) {
             t.updateResources();
+        }
+    }
+
+    public void onSettingsHidden() {
+        for (QuickSettingsTile t : mQuickSettingsTiles) {
+            t.onSettingsHidden();
+        }
+    }
+
+    public void onSettingsVisible() {
+        for (QuickSettingsTile t : mQuickSettingsTiles) {
+            t.onSettingsVisible();
         }
     }
 

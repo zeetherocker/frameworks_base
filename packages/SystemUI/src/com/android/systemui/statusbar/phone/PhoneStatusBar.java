@@ -1513,6 +1513,11 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
                 }
             }
 
+            if (mQS != null) {
+                mQS.shutdown();
+                mQS = null;
+            }
+
             // wherever you find it, Quick Settings needs a container to survive
             mSettingsContainer = (QuickSettingsContainerView)
                     mStatusBarWindow.findViewById(R.id.quick_settings_container);
@@ -1648,6 +1653,14 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
         transitionDrawable.setCrossFadeEnabled(true);
         mNotificationPanelHeader.setBackgroundDrawable(transitionDrawable);
         transitionDrawable.startTransition(1000);
+    }
+
+    protected void onQuickSettingsHidden() {
+        mQS.onSettingsHidden();
+    }
+
+    protected void onQuickSettingsVisible() {
+        mQS.onSettingsVisible();
     }
 
     @Override

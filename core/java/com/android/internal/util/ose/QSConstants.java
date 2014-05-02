@@ -54,6 +54,7 @@ public class QSConstants {
         // dynamic tiles
         public static final String TILE_ALARM = "toggleAlarm";
         public static final String TILE_BUGREPORT = "toggleBugReport";
+        public static final String TILE_EQUALIZER = "toggleEqualizer";
         public static final String TILE_IMESWITCHER = "toggleImeSwitcher";
         public static final String TILE_USBTETHER = "toggleUsbTether";
 
@@ -85,6 +86,7 @@ public class QSConstants {
         static {
             DYNAMIC_TILES_DEFAULT.add(TILE_ALARM);
             DYNAMIC_TILES_DEFAULT.add(TILE_BUGREPORT);
+            DYNAMIC_TILES_DEFAULT.add(TILE_EQUALIZER);
             DYNAMIC_TILES_DEFAULT.add(TILE_IMESWITCHER);
             DYNAMIC_TILES_DEFAULT.add(TILE_USBTETHER);
         }
