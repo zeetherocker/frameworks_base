@@ -213,6 +213,8 @@ void Font::drawCachedGlyphBitmap(CachedGlyphInfo* glyph, int x, int y, uint8_t* 
 
     CacheTexture* cacheTexture = glyph->mCacheTexture;
 
+    uint32_t formatSize = PixelBuffer::formatSize(pixelBuffer->getFormat());
+    uint32_t alpha_channel_offset = PixelBuffer::formatAlphaOffset(pixelBuffer->getFormat());
     uint32_t cacheWidth = cacheTexture->getWidth();
     uint32_t startY = glyph->mStartY * cacheWidth;
     uint32_t endY = startY + (glyph->mBitmapHeight * cacheWidth);
@@ -221,8 +223,15 @@ void Font::drawCachedGlyphBitmap(CachedGlyphInfo* glyph, int x, int y, uint8_t* 
     const uint8_t* cacheBuffer = pixelBuffer->map();
 
     for (uint32_t cacheY = startY, bitmapY = dstY * bitmapWidth; cacheY < endY;
-            cacheY += cacheWidth, bitmapY += bitmapWidth) {
-        memcpy(&bitmap[bitmapY + dstX], &cacheBuffer[cacheY + glyph->mStartX], glyph->mBitmapWidth);
+            cacheY += srcStride, bitmapY += bitmapWidth) {
+
+        if (formatSize == 1) {
+            memcpy(&bitmap[bitmapY + dstX], &cacheBuffer[cacheY + glyph->mStartX], glyph->mBitmapWidth);
+        } else {
+            for (uint32_t i = 0; i < glyph->mBitmapWidth; ++i) {
+                bitmap[bitmapY + dstX + i] = cacheBuffer[cacheY + (glyph->mStartX + i)*formatSize + alpha_channel_offset];
+            }
+        }
     }
 }
 
