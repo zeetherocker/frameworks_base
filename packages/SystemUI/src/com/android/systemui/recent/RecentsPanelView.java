@@ -981,20 +981,10 @@ public class RecentsPanelView extends FrameLayout implements OnItemClickListener
             // mListAdapter.notifyDataSetChanged();
 
             if (mRecentTaskDescriptions.size() == 0) {
-                // Instruct (possibly) running on-the-spot dialog to dismiss recents
-                mRecentsContainer.setDismissAfterConfirmation(true);
-                if (mRecentsContainer.isConfirmationDialogAnswered()) {
-                    // No on-the-spot dialog running, safe to dismiss now
-                    dismissAndGoBack();
-                }
-            }
-        } else {
-            // Instruct (possibly) running on-the-spot dialog to dismiss recents
-            mRecentsContainer.setDismissAfterConfirmation(true);
-            if (mRecentsContainer.isConfirmationDialogAnswered()) {
-                // No on-the-spot dialog running, safe to dismiss now
                 dismissAndGoBack();
             }
+        } else {
+            dismissAndGoBack();
         }
 
         // Currently, either direction means the same thing, so ignore direction and remove
