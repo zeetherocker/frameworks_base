@@ -58,8 +58,9 @@ public class QuickSettingsContainerView extends FrameLayout {
         mContext = context;
         mResources = getContext().getResources();
         TypedArray a = context.obtainStyledAttributes(
-        		attrs, R.styleable.QuickSettingsContainer, 0, 0);
+                attrs, R.styleable.QuickSettingsContainer, 0, 0);
         mSingleRow = a.getBoolean(R.styleable.QuickSettingsContainer_singleRow, false);
+        a.recycle();
 
         updateResources();
     }
@@ -146,9 +147,9 @@ public class QuickSettingsContainerView extends FrameLayout {
         	int totalHeight = cellHeight + getPaddingTop() + getPaddingBottom();
         	setMeasuredDimension(totalWidth, totalHeight);
         } else {
-            setMeasuredDimension(width, newHeight);  	
+            setMeasuredDimension(width, newHeight);
         }
-        
+
     }
 
     @Override
