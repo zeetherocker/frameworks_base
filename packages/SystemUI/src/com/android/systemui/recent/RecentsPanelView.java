@@ -22,6 +22,7 @@ import android.animation.TimeInterpolator;
 import android.app.ActivityManager;
 import android.app.ActivityManagerNative;
 import android.app.ActivityOptions;
+import android.app.INotificationManager;
 import android.app.TaskStackBuilder;
 import android.app.admin.DevicePolicyManager;
 import android.content.ActivityNotFoundException;
@@ -56,6 +57,7 @@ import android.graphics.PorterDuff.Mode;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.RemoteException;
+import android.os.ServiceManager;
 import android.os.UserHandle;
 import android.provider.Settings;
 import android.util.AttributeSet;
@@ -82,6 +84,7 @@ import android.widget.ImageView;
 import android.widget.ImageView.ScaleType;
 import android.widget.PopupMenu;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 import com.android.systemui.R;
@@ -128,6 +131,9 @@ public class RecentsPanelView extends FrameLayout implements OnItemClickListener
 
     private int mDragPositionX;
     private int mDragPositionY;
+
+    private RecentsActivity mRecentsActivity;
+    private INotificationManager mNotificationManager;
 
     private ImageView mClearRecents;
     private ImageView mRJingles;
@@ -1100,6 +1106,11 @@ public class RecentsPanelView extends FrameLayout implements OnItemClickListener
         thumbnailView.setSelected(true);
         final PopupMenu popup =
             new PopupMenu(mContext, anchorView == null ? selectedView : anchorView);
+        // initialize if null
+        if (mNotificationManager == null) {
+            mNotificationManager = INotificationManager.Stub.asInterface(
+                    ServiceManager.getService(Context.NOTIFICATION_SERVICE));
+        }
         mPopup = popup;
         popup.getMenuInflater().inflate(R.menu.recent_popup_menu_split, popup.getMenu());
 
@@ -1155,6 +1166,32 @@ public class RecentsPanelView extends FrameLayout implements OnItemClickListener
                     ViewHolder viewHolder = (ViewHolder) selectedView.getTag();
                     if (viewHolder != null) {
                         final TaskDescription ad = viewHolder.taskDescription;
+                        String currentViewPackage = ad.packageName;
+                        boolean allowed = true; // default on
+                        try {
+                            // preloaded apps are added to the blacklist array when is recreated, handled in the notification manager
+                            allowed = mNotificationManager.isPackageAllowedForFloatingMode(currentViewPackage);
+                        } catch (android.os.RemoteException ex) {
+                            // System is dead
+                        }
+                        if (!allowed) {
+                            dismissAndGoBack();
+                            String text = mContext.getResources().getString(R.string.floating_mode_blacklisted_app);
+                            int duration = Toast.LENGTH_LONG;
+                            Toast.makeText(mContext, text, duration).show();
+                            return true;
+                        } else {
+                            dismissAndGoBack();
+                        }
+                        selectedView.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                Intent intent = ad.intent;
+                                intent.setFlags(Intent.FLAG_FLOATING_WINDOW
+                                        | Intent.FLAG_ACTIVITY_NEW_TASK);
+                                mContext.startActivity(intent);
+                            }
+                        });
                         ActivityManager am = (ActivityManager)mContext.getSystemService(
                                 Context.ACTIVITY_SERVICE);
                         am.forceStopPackage(ad.packageName);
