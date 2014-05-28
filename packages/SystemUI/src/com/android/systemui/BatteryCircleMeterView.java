@@ -58,6 +58,7 @@ import com.android.systemui.BatteryMeterView;
 public class BatteryCircleMeterView extends ImageView {
     private Handler mHandler = new Handler();
     // state variables
+    private boolean mIsQuickSettings;
     private boolean mAttached;      // whether or not attached to a window
     private boolean mActivated;     // whether or not activated due to system settings
     private boolean mPercentage;    // whether or not to show percentage number
@@ -178,7 +179,7 @@ public class BatteryCircleMeterView extends ImageView {
 
         mPathEffect = new DashPathEffect(new float[]{3,2},0);
 
-        updateSettings();
+        updateSettings(mIsQuickSettings);
     }
 
     @Override
@@ -237,6 +238,14 @@ public class BatteryCircleMeterView extends ImageView {
             padLevel = 100;
         }
 
+        if (mLevel > 14) {
+          if (mIsCharging) {
+            usePaint.setColor(mCircleTextChargingColor);
+          } else {
+            usePaint.setColor(mCircleColor);
+          }
+        }
+
         // draw thin gray ring first
         canvas.drawArc(drawRect, 270, 360, false, mPaintGray);
         // draw colored arc representing charge level
@@ -246,8 +255,8 @@ public class BatteryCircleMeterView extends ImageView {
         if (level < 100 && mPercentage) {
             if (level <= 14) {
                 mPaintFont.setColor(mPaintRed.getColor());
-            } else if (mIsCharging) {
-                mPaintFont.setColor(mCircleTextChargingColor);
+            } else if (mIsCharging && (level > 89)) {
+                mPaintFont.setColor(Color.GREEN);
             } else {
                 if (mCustomColor) {
                     mPaintFont.setColor(systemColor);
@@ -277,9 +286,11 @@ public class BatteryCircleMeterView extends ImageView {
         }
     }
 
-    public void updateSettings() {
+    public void updateSettings(final boolean isQuickSettingsTile) {
         Resources res = getResources();
         ContentResolver resolver = getContext().getContentResolver();
+
+        mIsQuickSettings = isQuickSettingsTile;
 
         mBatteryStyle = Settings.System.getIntForUser(resolver,
                 Settings.System.STATUS_BAR_BATTERY, 0, UserHandle.USER_CURRENT);
@@ -317,10 +328,15 @@ public class BatteryCircleMeterView extends ImageView {
         mRectLeft = null;
         mCircleSize = 0;
 
-        mActivated = (mBatteryStyle == BatteryMeterView.BATTERY_STYLE_CIRCLE ||
-                      mBatteryStyle == BatteryMeterView.BATTERY_STYLE_CIRCLE_PERCENT ||
-                      mBatteryStyle == BatteryMeterView.BATTERY_STYLE_DOTTED_CIRCLE ||
-                      mBatteryStyle == BatteryMeterView.BATTERY_STYLE_DOTTED_CIRCLE_PERCENT);
+        if (isQuickSettingsTile && mBatteryStyle == BatteryMeterView.BATTERY_STYLE_GONE) {
+           mActivated = false;
+        } else {
+           mActivated = (mBatteryStyle == BatteryMeterView.BATTERY_STYLE_CIRCLE ||
+                         mBatteryStyle == BatteryMeterView.BATTERY_STYLE_CIRCLE_PERCENT ||
+                         mBatteryStyle == BatteryMeterView.BATTERY_STYLE_DOTTED_CIRCLE ||
+                         mBatteryStyle == BatteryMeterView.BATTERY_STYLE_DOTTED_CIRCLE_PERCENT);
+        }
+
         mPercentage = (mBatteryStyle == BatteryMeterView.BATTERY_STYLE_CIRCLE_PERCENT ||
                        mBatteryStyle == BatteryMeterView.BATTERY_STYLE_DOTTED_CIRCLE_PERCENT);
 
