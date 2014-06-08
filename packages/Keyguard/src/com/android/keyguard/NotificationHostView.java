@@ -181,9 +181,6 @@ public class NotificationHostView extends FrameLayout {
         public void onClick(View v) {
             PendingIntent i = statusBarNotification.getNotification().contentIntent;
             if (!swipeGesture && !longpress && i != null) {
-                if ((statusBarNotification.getNotification().flags & Notification.FLAG_AUTO_CANCEL) != 0) {
-                    dismiss(statusBarNotification);
-                }
                 try {
                     Intent intent = i.getIntent();
                     intent.setFlags(
@@ -194,6 +191,9 @@ public class NotificationHostView extends FrameLayout {
                     ActivityManagerNative.getDefault().dismissKeyguardOnNextActivity();
                     i.send();
                     hideAllNotifications();
+                    if ((statusBarNotification.getNotification().flags & Notification.FLAG_AUTO_CANCEL) != 0) {
+                        removeNotification(statusBarNotification);
+                    }
                 } catch (CanceledException ex) {
                     Log.e(TAG, "intent canceled!");
                 } catch (RemoteException ex) {
@@ -422,11 +422,6 @@ public class NotificationHostView extends FrameLayout {
         setBackgroundRecursive((ViewGroup) remoteView);
         remoteView.setAlpha(1f);
 
-        View v = remoteView.findViewById(android.R.id.icon);
-        if (v instanceof ImageView) {
-            ImageView icon = (ImageView)v;
-            icon.setBackgroundColor(0);
-        }
         remoteView.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
@@ -474,7 +469,7 @@ public class NotificationHostView extends FrameLayout {
         mNotifView.addView(nv, 0);
         mNotifications.put(describeNotification(sbn), nv);
         mNotifView.bringToFront();
-        if (showNotification) {
+        if(showNotification) {
             if (mDynamicWidth) {
                 // Wait for the layout to change so the notification width can be determined
                 runOnLayoutChange(nv, new Runnable() {
@@ -523,6 +518,7 @@ public class NotificationHostView extends FrameLayout {
             v.onAnimationEnd = new Runnable() {
                 public void run() {
                     if (dismiss) {
+                        Log.e(TAG, "dismiss");
                         dismiss(sbn);
                     }
                     mNotifView.removeView(v);
