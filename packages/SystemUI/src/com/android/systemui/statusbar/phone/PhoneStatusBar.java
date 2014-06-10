@@ -4421,6 +4421,12 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
             else if (ACTION_VOLUMEPANEL_HIDDEN.equals(action)) {
                 animateStatusBarIn();
             }
+            else if (ACTION_VOLUMEPANEL_SHOWN.equals(action)) {
+                animateStatusBarOut();
+            }
+            else if (ACTION_VOLUMEPANEL_HIDDEN.equals(action)) {
+                animateStatusBarIn();
+            }
         }
     };
 
