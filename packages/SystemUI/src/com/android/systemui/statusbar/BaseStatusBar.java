@@ -36,6 +36,7 @@ import android.app.Activity;
 import android.app.ActivityManager;
 import android.app.ActivityManager.RunningAppProcessInfo;
 import android.app.ActivityManagerNative;
+import android.app.INotificationManager;
 import android.app.Notification;
 import android.app.PendingIntent;
 import android.app.TaskStackBuilder;
@@ -173,6 +174,7 @@ public abstract class BaseStatusBar extends SystemUI implements
     public static final int HOVER_ENABLED = 1;
 
     protected CommandQueue mCommandQueue;
+    protected INotificationManager mNotificationManager;
     protected IStatusBarService mBarService;
     protected H mHandler = createHandler();
 
@@ -297,6 +299,10 @@ public abstract class BaseStatusBar extends SystemUI implements
     public IStatusBarService getService() {
         return mBarService;
     }
+
+    public INotificationManager getNotificationManager() {
+         return mNotificationManager;
+     }
 
     public NotificationData getNotificationData() {
         return mNotificationData;
@@ -423,6 +429,9 @@ public abstract class BaseStatusBar extends SystemUI implements
         mDreamManager = IDreamManager.Stub.asInterface(
                 ServiceManager.checkService(DreamService.DREAM_SERVICE));
         mPowerManager = (PowerManager) mContext.getSystemService(Context.POWER_SERVICE);
+
+        mNotificationManager = INotificationManager.Stub.asInterface(
+                 ServiceManager.getService(Context.NOTIFICATION_SERVICE));
 
         mProvisioningObserver.onChange(false); // set up
         mContext.getContentResolver().registerContentObserver(
@@ -568,14 +577,9 @@ public abstract class BaseStatusBar extends SystemUI implements
             }});
 
         updateHalo();
-    }
-
-        SettingsObserver settingsObserver = new SettingsObserver(new Handler());
-        settingsObserver.observe();
 
         mContext.getContentResolver().registerContentObserver(
-                Settings.System.getUriFor(Settings.System.HOVER_STATE),
-                        false, new ContentObserver(new Handler()) {
+                Settings.System.getUriFor(Settings.System.HOVER_STATE), false, new ContentObserver(new Handler()) {
             @Override
             public void onChange(boolean selfChange) {
                 updateHoverState();
@@ -594,6 +598,7 @@ public abstract class BaseStatusBar extends SystemUI implements
                 if(showing) mHover.dismissHover(false, false);
             }
         });
+
     }
 
     public Hover getHoverInstance() {
