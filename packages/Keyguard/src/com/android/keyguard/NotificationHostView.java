@@ -422,6 +422,11 @@ public class NotificationHostView extends FrameLayout {
         setBackgroundRecursive((ViewGroup) remoteView);
         remoteView.setAlpha(1f);
 
+        View v = remoteView.findViewById(android.R.id.icon);
+        if (v instanceof ImageView) {
+            ImageView icon = (ImageView)v;
+            icon.setBackgroundColor(0);
+        }
         remoteView.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
@@ -434,6 +439,7 @@ public class NotificationHostView extends FrameLayout {
                 return true;
             }
         });
+
 
 
         if (oldView != null){
@@ -454,6 +460,7 @@ public class NotificationHostView extends FrameLayout {
                         } else {
                             oldView.getChildAt(0).setX(0);
                         }
+                        oldView.getChildAt(0).setBackgroundColor(NotificationViewManager.config.notificationColor);
                     }
                     oldView.statusBarNotification = sbn;
                 }
@@ -518,7 +525,6 @@ public class NotificationHostView extends FrameLayout {
             v.onAnimationEnd = new Runnable() {
                 public void run() {
                     if (dismiss) {
-                        Log.e(TAG, "dismiss");
                         dismiss(sbn);
                     }
                     mNotifView.removeView(v);
