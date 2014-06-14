@@ -370,4 +370,11 @@
 
     <!-- Spam Blocker -->
     <string name="status_bar_notification_spam_item_title">Block messages like these</string>
+
+    <!-- Screenshot Tile -->
+    <string name="quick_settings_screenshot_label">Screenshot</string>
+    <string name="screenshot_toast">Screenshot in %1$d seconds</string>
+    <string name="permdesc_screenshot">Capture screenshot</string>
+    <string name="permlab_screenshot">Allows the app to cature a screenshot. This is protected by SystemUI.</string>
+
 </resources>

@@ -42,6 +42,7 @@ import static com.android.internal.util.ose.QSConstants.TILE_NFC;
 import static com.android.internal.util.ose.QSConstants.TILE_QUICKRECORD;
 import static com.android.internal.util.ose.QSConstants.TILE_QUIETHOURS;
 import static com.android.internal.util.ose.QSConstants.TILE_RINGER;
+import static com.android.internal.util.ose.QSConstants.TILE_SCREENSHOT;
 import static com.android.internal.util.ose.QSConstants.TILE_SCREENTIMEOUT;
 import static com.android.internal.util.ose.QSConstants.TILE_SETTINGS;
 import static com.android.internal.util.ose.QSConstants.TILE_SLEEP;
@@ -119,6 +120,7 @@ import com.android.systemui.quicksettings.QuickSettingsTile;
 import com.android.systemui.quicksettings.QuickRecordTile;
 import com.android.systemui.quicksettings.QuietHoursTile;
 import com.android.systemui.quicksettings.RingerModeTile;
+import com.android.systemui.quicksettings.ScreenshotTile;
 import com.android.systemui.quicksettings.ScreenTimeoutTile;
 import com.android.systemui.quicksettings.SleepScreenTile;
 import com.android.systemui.quicksettings.ShakeEventTile;
@@ -311,6 +313,8 @@ public class QuickSettingsController {
                 qs = new HeadsUpTile(mContext, this);
             } else if (tile.equals(TILE_APPCIRCLEBAR)) {
                 qs = new AppcirclebarTile(mContext, this);
+            } else if (tile.equals(TILE_SCREENSHOT)) {
+                qs = new ScreenshotTile(mContext, this, mHandler);
             }
 
             if (qs != null) {

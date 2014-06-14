@@ -53,6 +53,7 @@ public class QSConstants {
         public static final String TILE_HOVER = "toggleHover";
         public static final String TILE_HEADS_UP = "toggleHeadsUp";
         public static final String TILE_APPCIRCLEBAR = "toggleAppcirclebar";
+        public static final String TILE_SCREENSHOT = "toggleScreenshot";
 
         // dynamic tiles
         public static final String TILE_ALARM = "toggleAlarm";
