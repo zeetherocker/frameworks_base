@@ -174,7 +174,7 @@ public class HoverLayout extends RelativeLayout implements ExpandHelper.Callback
             mHover.setLocked(userLocked);
             mHover.clearHandlerCallbacks();
             mHover.processOverridingQueue(mExpanded);
-           
+
         }
     }
 

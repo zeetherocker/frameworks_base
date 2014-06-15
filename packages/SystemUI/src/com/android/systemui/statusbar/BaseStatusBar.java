@@ -911,27 +911,6 @@ public abstract class BaseStatusBar extends SystemUI implements
                                     .getSystemService(Context.ACTIVITY_SERVICE);
                             am.clearApplicationUserData(packageNameF,
                                     new FakeClearUserDataObserver());
-                        } else if (item.getItemId() == R.id.notification_hide_icon_packages) {
-                            item.setChecked(!item.isChecked());
-                            setIconHiddenByUser(packageNameF, item.isChecked());
-                            updateNotificationIcons();
-                        } else if (item.getItemId() == R.id.notification_floating_item) {
-                            boolean allowed = true;
-                            try {
-                                // preloaded apps are added to the blacklist array when is recreated, handled in the notification manager
-                                allowed = mNotificationManager.isPackageAllowedForFloatingMode(packageNameF);
-                            } catch (android.os.RemoteException ex) {
-                                // System is dead
-                            }
-                            if (allowed) {
-                                launchFloating(contentIntent);
-                                animateCollapsePanels(CommandQueue.FLAG_EXCLUDE_NONE);
-                            } else {
-                                String text = mContext.getResources().getString(R.string.floating_mode_blacklisted_app);
-                                int duration = Toast.LENGTH_LONG;
-                                animateCollapsePanels(CommandQueue.FLAG_EXCLUDE_NONE);
-                                Toast.makeText(mContext, text, duration).show();
-                            }
                         } else {
                             return false;
                         }
@@ -1391,7 +1370,7 @@ public abstract class BaseStatusBar extends SystemUI implements
             } catch (android.os.RemoteException ex) {
                 // System is dead
             }
-                 if (mFloat && !"android".equals(mPkg)) {
+                if (mFloat && !"android".equals(mPkg)) {
                     Intent transparent = new Intent(mContext, com.android.systemui.Transparent.class);
                     transparent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_FLOATING_WINDOW);
                     mContext.startActivity(transparent);
@@ -1410,10 +1389,6 @@ public abstract class BaseStatusBar extends SystemUI implements
                     // the stack trace isn't very helpful here.  Just log the exception message.
                     Log.w(TAG, "Sending contentIntent failed: " + e);
                 }
-            } else if(mIntent != null) {
-                if (mFloat && allowed) mIntent.addFlags(flags);
-                mContext.startActivity(mIntent);
-            }
 
             if(mKeyguard.isShowingAndNotHidden()) mKeyguard.dismiss();
 
