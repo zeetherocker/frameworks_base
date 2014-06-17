@@ -60,11 +60,13 @@ import static com.android.internal.util.ose.QSConstants.TILE_ONTHEGO;
 import static com.android.internal.util.ose.QSConstants.TILE_SHAKE;
 import static com.android.internal.util.ose.QSConstants.TILE_BATTERYSAVER;
 import static com.android.internal.util.ose.QSConstants.TILE_EQUALIZER;
+import static com.android.internal.util.ose.QSConstants.TILE_HOVER;
 
 import android.app.Activity;
 import android.app.ActivityManagerNative;
 import android.app.AlertDialog;
 import android.app.Dialog;
+
 import android.content.BroadcastReceiver;
 import android.content.ContentResolver;
 import android.content.Context;
@@ -128,6 +130,7 @@ import com.android.systemui.quicksettings.RebootTile;
 import com.android.systemui.quicksettings.Weather;
 import com.android.systemui.quicksettings.FastChargeTile;
 import com.android.systemui.quicksettings.OnTheGoTile;
+import com.android.systemui.quicksettings.HoverTile;
 import com.android.systemui.R;
 
 import java.io.File;
@@ -296,6 +299,8 @@ public class QuickSettingsController {
                 qs = new OnTheGoTile(mContext, this);
             } else if (tile.equals(TILE_BATTERYSAVER)) {
                 qs = new BatterySaverTile(mContext, this);
+            } else if (tile.equals(TILE_HOVER)) {
+                qs = new HoverTile(mContext, this);
             }
 
             if (qs != null) {
