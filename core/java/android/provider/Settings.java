@@ -4725,6 +4725,13 @@ public final class Settings {
         public static final String MENU_UNLOCK_SCREEN = "menu_unlock_screen";
 
         /**
+         *
+         * Disable Immersive Message
+         * @hide
+         */
+        public static final String DISABLE_IMMERSIVE_MESSAGE = "disable_immersive_message";
+
+        /**
          * SMOOTH PROGRESS BAR Mirror
          * @hide
          */
