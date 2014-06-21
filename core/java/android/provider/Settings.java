@@ -4140,18 +4140,6 @@ public final class Settings {
         public static final String GESTURE_ANYWHERE_TRIGGER_TOP = "gesture_anywhere_trigger_top";
 
         /**
-         * Swipe recents for floating windows option
-         * @hide
-         */
-        public static final String RECENTS_SWIPE_FLOATING = "recents_swipe_floating";
-
-        /**
-         * Swipe notification for floating window option
-         * @hide
-         */
-        public static final String STATUS_BAR_NOTIFICATION_SWIPE_FLOATING = "status_bar_notification_swipe_floating";
-
-        /**
          * Height of the gesture anywhere trigger.
          * @hide
          */
@@ -4207,6 +4195,28 @@ public final class Settings {
          * @hide
          */
         public static final String GESTURES_DOUBLE_TAP = "gestures_double_tap";
+
+        /**
+         * Swipe recents for floating windows option
+         * @hide
+         */
+        public static final String RECENTS_SWIPE_FLOATING = "recents_swipe_floating";
+
+        /**
+         * Swipe notification for floating window option
+         * @hide
+         */
+        public static final String STATUS_BAR_NOTIFICATION_SWIPE_FLOATING = "status_bar_notification_swipe_floating";
+
+        /**
+         * Settings to reset on user choice. They will fall back to their default value (0).
+         *
+         * @hide
+         */
+        public static final String[] SETTINGS_TO_RESET = {
+            RECENTS_SWIPE_FLOATING,
+            STATUS_BAR_NOTIFICATION_SWIPE_FLOATING
+        };
 
         /**
          * Whether custom hardware key rebinding is enabled
