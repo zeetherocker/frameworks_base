@@ -1,7 +1,7 @@
 /*
  * Copyright (C) 2012 The Android Open Source Project
  * Copyright (C) 2013 CyanogenMod Project
- * Copyright (C) 2014 OSE Project
+ * Copyright (C) 2013 The SlimRoms Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -73,9 +73,6 @@ public class UserTile extends QuickSettingsTile {
                     Intent intent = new Intent(Intent.ACTION_VIEW,
                             ContactsContract.Profile.CONTENT_URI);
                     startSettingsActivity(intent);
-                }
-		if (isFlipTilesEnabled()) {
-                    flipTile(0);
                 }
             }
         };
