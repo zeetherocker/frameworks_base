@@ -2774,6 +2774,18 @@ public final class Settings {
 	* @hide
 	*/
 	public static final String ACTIVE_DISPLAY_THRESHOLD = "active_display_threshold";
+	
+                /**
+         * Swipe recents for floating windows option
+         * @hide
+         */
+        public static final String RECENTS_SWIPE_FLOATING = "recents_swipe_floating";
+
+        /**
+         * Swipe notification for floating window option
+         * @hide
+         */
+        public static final String STATUS_BAR_NOTIFICATION_SWIPE_FLOATING = "status_bar_notification_swipe_floating";
 
         /**
          * Stores values for custom lockscreen targets
@@ -4197,28 +4209,6 @@ public final class Settings {
         public static final String GESTURES_DOUBLE_TAP = "gestures_double_tap";
 
         /**
-         * Swipe recents for floating windows option
-         * @hide
-         */
-        public static final String RECENTS_SWIPE_FLOATING = "recents_swipe_floating";
-
-        /**
-         * Swipe notification for floating window option
-         * @hide
-         */
-        public static final String STATUS_BAR_NOTIFICATION_SWIPE_FLOATING = "status_bar_notification_swipe_floating";
-
-        /**
-         * Settings to reset on user choice. They will fall back to their default value (0).
-         *
-         * @hide
-         */
-        public static final String[] SETTINGS_TO_RESET = {
-            RECENTS_SWIPE_FLOATING,
-            STATUS_BAR_NOTIFICATION_SWIPE_FLOATING
-        };
-
-        /**
          * Whether custom hardware key rebinding is enabled
          * @hide
          */
@@ -4845,6 +4835,16 @@ public final class Settings {
             QUIET_HOURS_STILL,
             QUIET_HOURS_DIM,
             LOCKSCREEN_ALWAYS_SHOW_BATTERY,
+        };
+        
+        /**
+         * Settings to reset on user choice. They will fall back to their default value (0).
+         *
+         * @hide
+         */
+        public static final String[] SETTINGS_TO_RESET = {
+            RECENTS_SWIPE_FLOATING,
+            STATUS_BAR_NOTIFICATION_SWIPE_FLOATING
         };
 
         // Settings moved to Settings.Secure
@@ -8763,9 +8763,7 @@ public final class Settings {
             WIFI_NUM_OPEN_NETWORKS_KEPT,
             EMERGENCY_TONE,
             CALL_AUTO_RETRY,
-            DOCK_AUDIO_MEDIA_ENABLED,
-            RECENTS_SWIPE_FLOATING,
-            STATUS_BAR_NOTIFICATION_SWIPE_FLOATING
+            DOCK_AUDIO_MEDIA_ENABLED
         };
 
         // Populated lazily, guarded by class object:

@@ -838,6 +838,22 @@ public abstract class BaseStatusBar extends SystemUI implements
         TaskStackBuilder.create(mContext).addNextIntentWithParentStack(intent).startActivities(
                 null, UserHandle.CURRENT);
     }
+    
+    private void launchFloating(PendingIntent pIntent) {
+        Intent overlay = new Intent();
+        overlay.addFlags(Intent.FLAG_FLOATING_WINDOW | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        try {
+            ActivityManagerNative.getDefault().resumeAppSwitches();
+            ActivityManagerNative.getDefault().dismissKeyguardOnNextActivity();
+        } catch (RemoteException e) {
+        }
+        try {
+            pIntent.send(mContext, 0, overlay);
+        } catch (PendingIntent.CanceledException e) {
+            // the stack trace isn't very helpful here.  Just log the exception message.
+            Slog.w(TAG, "Sending contentIntent failed: " + e);
+        }
+    }
 
     protected View.OnLongClickListener getNotificationLongClicker() {
         return new View.OnLongClickListener() {
@@ -1343,14 +1359,7 @@ public abstract class BaseStatusBar extends SystemUI implements
             } catch (RemoteException e) {
             }
 
-            int flags = Intent.FLAG_FLOATING_WINDOW | Intent.FLAG_ACTIVITY_CLEAR_TASK;
-            boolean allowed = true; // default on, except for preloaded false
-            try {
-                // preloaded apps are added to the blacklist array when is recreated, handled in the notification manager
-                allowed = mNotificationManager.isPackageAllowedForFloatingMode(mPkg);
-            } catch (android.os.RemoteException ex) {
-                // System is dead
-            }
+            //int flags = Intent.FLAG_FLOATING_WINDOW | Intent.FLAG_ACTIVITY_CLEAR_TASK;
 
             if (mPile.launchNextNotificationFloating()) {
                 if (mPendingIntent != null) {
@@ -1361,7 +1370,6 @@ public abstract class BaseStatusBar extends SystemUI implements
                 v.getLocationOnScreen(pos);
                 Intent overlay = new Intent();
                 if (mFloat) overlay.addFlags(Intent.FLAG_FLOATING_WINDOW | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-
                 overlay.setSourceBounds(
                         new Rect(pos[0], pos[1], pos[0] + v.getWidth(), pos[1] + v.getHeight()));
                 try {
@@ -1370,6 +1378,10 @@ public abstract class BaseStatusBar extends SystemUI implements
                     // the stack trace isn't very helpful here.  Just log the exception message.
                     Log.w(TAG, "Sending contentIntent failed: " + e);
                 }
+            } else if(mIntent != null) {
+                //mIntent.addFlags(flags);
+                mContext.startActivity(mIntent);
+            }
 
             if(mKeyguard.isShowingAndNotHidden()) mKeyguard.dismiss();
 
