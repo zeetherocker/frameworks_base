@@ -36,6 +36,7 @@ import android.graphics.LightingColorFilter;
 import android.graphics.Rect;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.service.notification.StatusBarNotification;
 import android.telephony.PhoneStateListener;
 import android.telephony.TelephonyManager;
@@ -70,7 +71,7 @@ public class NotificationHelper {
     public static final String DELIMITER = "|";
     public static final int HOVER_ALPHA = 175;
     public static final int DEFAULT_ALPHA = 255;
-	
+
     private static final String FONT_FAMILY_DEFAULT = "sans-serif";
     private static final String FONT_FAMILY_LIGHT = "sans-serif-light";
     private static final String FONT_FAMILY_CONDENSED = "sans-serif-condensed";
@@ -122,7 +123,7 @@ public class NotificationHelper {
     public boolean isHoverShowing() {
         return mHover.isShowing();
     }
-    
+
     public boolean isPeekEnabled() {
         return mPeek.mEnabled;
     }
@@ -182,7 +183,8 @@ public class NotificationHelper {
             boolean makeFloating = floating
                     && !isNotificationBlacklisted(entry.notification.getPackageName())
                     // if the notification is from the foreground app, don't open in floating mode
-                    && !entry.notification.getPackageName().equals(getForegroundPackageName());
+                    && !entry.notification.getPackageName().equals(getForegroundPackageName())
+                    && openInFloatingMode();
 
             intent.makeFloating(makeFloating);
         }
@@ -259,7 +261,7 @@ public class NotificationHelper {
             // if the new one isn't.
             String oldNotificationText = getNotificationTitle(oldNotif);
             String newNotificationText = getNotificationTitle(newNotif);
-            if(newNotificationText == null ? oldNotificationText != null : 
+            if(newNotificationText == null ? oldNotificationText != null :
                     !newNotificationText.equals(oldNotificationText)) return true;
 
             // Last chance, check when the notifications were posted. If times
@@ -366,5 +368,10 @@ public class NotificationHelper {
         return state == TelephonyManager.SIM_STATE_PIN_REQUIRED
                  || state == TelephonyManager.SIM_STATE_PUK_REQUIRED
                  || state == TelephonyManager.SIM_STATE_NETWORK_LOCKED;
+    }
+
+    public boolean openInFloatingMode() {
+        return Settings.System.getBoolean(mContext.getContentResolver(),
+                Settings.System.HEADS_UP_FLOATING_WINDOW, true);
     }
 }
