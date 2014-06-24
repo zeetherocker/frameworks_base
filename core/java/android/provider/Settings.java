@@ -2774,7 +2774,7 @@ public final class Settings {
 	* @hide
 	*/
 	public static final String ACTIVE_DISPLAY_THRESHOLD = "active_display_threshold";
-	
+
                 /**
          * Swipe recents for floating windows option
          * @hide
@@ -4758,6 +4758,13 @@ public final class Settings {
         public static final String HEADS_UP_CUSTOM_VALUES = "heads_up_custom_values";
 
         /**
+         * Which applications to disable heads up notifications for
+         *
+         * @hide
+         */
+        public static final String HEADS_UP_BLACKLIST_VALUES = "heads_up_blacklist_values";
+
+        /**
          * keys and easy to update.
          *
          * NOTE: Settings are backed up and restored in the order they appear
@@ -4836,7 +4843,7 @@ public final class Settings {
             QUIET_HOURS_DIM,
             LOCKSCREEN_ALWAYS_SHOW_BATTERY,
         };
-        
+
         /**
          * Settings to reset on user choice. They will fall back to their default value (0).
          *
