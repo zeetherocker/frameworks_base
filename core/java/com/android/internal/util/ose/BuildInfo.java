@@ -13,14 +13,14 @@
 * See the License for the specific language governing permissions and
 * limitations under the License.
 */
-package com.android.internal.util.slim;
+package com.android.internal.util.ose;
 
 import android.os.SystemProperties;
 
 public class BuildInfo {
 
-    private static final String BUILD_TYPE_PROP = "ro.slim.buildtype";
-    private static final String SLIM_VERSION_PROP = "ro.slim.version";
+    private static final String BUILD_TYPE_PROP = "ro.ose.buildtype";
+    private static final String SLIM_VERSION_PROP = "ro.ose.version";
 
     public static String getSlimBuildType() {
         return SystemProperties.get(BUILD_TYPE_PROP, "");

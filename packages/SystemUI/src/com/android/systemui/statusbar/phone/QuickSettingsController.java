@@ -61,6 +61,7 @@ import static com.android.internal.util.ose.QSConstants.TILE_SHAKE;
 import static com.android.internal.util.ose.QSConstants.TILE_BATTERYSAVER;
 import static com.android.internal.util.ose.QSConstants.TILE_EQUALIZER;
 import static com.android.internal.util.ose.QSConstants.TILE_HOVER;
+import static com.android.internal.util.ose.QSConstants.TILE_HEADS_UP;
 
 import android.app.Activity;
 import android.app.ActivityManagerNative;
@@ -102,6 +103,7 @@ import com.android.systemui.quicksettings.CustomTile;
 import com.android.systemui.quicksettings.EqualizerTile;
 import com.android.systemui.quicksettings.ExpandedDesktopTile;
 import com.android.systemui.quicksettings.LocationTile;
+import com.android.systemui.quicksettings.HeadsUpTile;
 import com.android.systemui.quicksettings.InputMethodTile;
 import com.android.systemui.quicksettings.LteTile;
 import com.android.systemui.quicksettings.MobileNetworkTile;
@@ -301,6 +303,8 @@ public class QuickSettingsController {
                 qs = new BatterySaverTile(mContext, this);
             } else if (tile.equals(TILE_HOVER)) {
                 qs = new HoverTile(mContext, this);
+            } else if (tile.equals(TILE_HEADS_UP)) {
+                qs = new HeadsUpTile(mContext, this);
             }
 
             if (qs != null) {
