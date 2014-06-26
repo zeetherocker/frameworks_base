@@ -104,6 +104,7 @@
   <!-- UI theme mode -->
   <java-symbol type="integer" name="config_uiThemeMode" />
   <java-symbol type="string" name="theme_auto_switch_mode_error" />
+  <java-symbol type="drawable" name="dialog_full_holo_dark" />
 
   <!-- Statusbar double tap gesture -->
   <java-symbol type="bool" name="config_disableDoubleTapSleepGesture" />
@@ -252,12 +253,24 @@
   <java-symbol type="string" name="floating_window_snap_left"/>
   <java-symbol type="string" name="floating_window_snap_right"/>
   <java-symbol type="string" name="floating_window_minimize"/>
-  
+
   <!--Setting confirmation dialog-->
   <java-symbol type="id" name="setting_confirmation_dialog_visual_hint" />
   <java-symbol type="layout" name="setting_confirmation_dialog" />
   <java-symbol type="string" name="setting_confirmation_ask_me_later" />
   <java-symbol type="string" name="setting_confirmation_yes" />
   <java-symbol type="string" name="setting_confirmation_no" />
+
+  <!-- Button and keyboard backlight -->
+  <java-symbol type="bool" name="config_deviceHasVariableButtonBrightness" />
+  <java-symbol type="integer" name="config_buttonBrightnessSettingDefault" />
+  <java-symbol type="integer" name="config_keyboardBrightnessSettingDefault" />
+
+  <!-- Config.xml entries -->
+  <java-symbol type="bool" name="config_samsung_stk" />
+  <java-symbol type="string" name="config_legacyUmsLunFile" />
+  <java-symbol type="string" name="config_deviceKeyHandlerLib" />
+  <java-symbol type="string" name="config_deviceKeyHandlerClass" />
+  <java-symbol type="bool" name="config_smsSamsungCdmaAlternateMessageIDEncoding" />
 
 </resources>
