@@ -1998,7 +1998,11 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
     }
 
     private void removeHeadsUpView() {
-        mWindowManager.removeView(mHeadsUpNotificationView);
+        try {
+            mWindowManager.removeView(mHeadsUpNotificationView);
+        } catch(java.lang.IllegalArgumentException e) {
+        }
+
     }
 
     public void refreshAllStatusBarIcons() {
