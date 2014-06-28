@@ -4792,6 +4792,13 @@ public final class Settings {
         public static final String HEADS_UP_FLOATING_WINDOW = "heads_up_floating_window";
 
         /**
+         * Use HOME/END instead of UP/DOWN as longpress action for NavBar IME Cursors
+         *
+         * @hide
+         */
+        public static final String IME_CURSOR_LONGPRESS_ACTION = "ime_cursor_longpress_action";
+
+        /**
          * keys and easy to update.
          *
          * NOTE: Settings are backed up and restored in the order they appear
