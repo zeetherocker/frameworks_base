@@ -14,10 +14,10 @@
  * limitations under the License.
  */
 
-package com.android.internal.util.liquid.identicons;
+package com.android.internal.util.ose.identicons;
 
-import android.annotation.ChaosLab;
-import android.annotation.ChaosLab.Classification;
+import android.annotation.OSELab;
+import android.annotation.OSELab.Classification;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -29,7 +29,7 @@ import java.nio.ByteBuffer;
 import java.security.MessageDigest;
 import java.util.zip.CRC32;
 
-@ChaosLab(name="QuickStats", classification=Classification.NEW_CLASS)
+@OSELab(name="QuickStats", classification=Classification.NEW_CLASS)
 public abstract class Identicon {
 
     public static final String IDENTICON_MARKER = "identicon_marker";

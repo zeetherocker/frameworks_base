@@ -14,10 +14,10 @@
  * limitations under the License.
  */
 
-package com.android.internal.util.liquid.identicons;
+package com.android.internal.util.ose.identicons;
 
-import android.annotation.ChaosLab;
-import android.annotation.ChaosLab.Classification;
+import android.annotation.OSELab;
+import android.annotation.OSELab.Classification;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -25,7 +25,7 @@ import android.graphics.Paint;
 import android.graphics.Path;
 import android.text.TextUtils;
 
-@ChaosLab(name="QuickStats", classification=Classification.NEW_CLASS)
+@OSELab(name="QuickStats", classification=Classification.NEW_CLASS)
 public class SpirographIdenticon extends Identicon {
 
     private static final int DEFAULT_SIZE = 96;

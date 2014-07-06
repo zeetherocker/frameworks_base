@@ -4167,6 +4167,20 @@ public final class Settings {
         public static final String GESTURE_ANYWHERE_SHOW_TRIGGER = "gesture_anywhere_show_trigger";
 
         /**
+         * Whether to display the gesture anywhere trigger region or not.
+         * @hide
+         */
+        @OSELab(name="Identicons", classification=Classification.NEW_FIELD)
+        public static final String IDENTICONS_ENABLED = "identicons_enabled";
+
+        /**
+         * Identicons style setting.
+         * @hide
+         */
+        @OSELab(name="Identicons", classification=Classification.NEW_FIELD)
+        public static final String IDENTICONS_STYLE = "identicons_style";
+
+        /**
          * Left Swipe Action
          *
          * @hide
@@ -4307,22 +4321,7 @@ public final class Settings {
          */
         public static final String KEY_ASSIST_LONG_PRESS_ACTION = "key_assist_long_press_action";
 
-       /**
-         * Whether to display the gesture anywhere trigger region or not.
-         * @hide
-         */
-        @ChaosLab(name="Identicons", classification=Classification.NEW_FIELD)
-        public static final String IDENTICONS_ENABLED = "identicons_enabled";
-
-        /**
-         * Identicons style setting.
-         * @hide
-         */
-        @ChaosLab(name="Identicons", classification=Classification.NEW_FIELD)
-        public static final String IDENTICONS_STYLE = "identicons_style";
-
-
-        /**
+               /**
          * Action to perform when the assistant (search) key is double tapped.
          * (default: ACTION_NULL) (See ButtonsConstants.java for valid values)
          * @hide

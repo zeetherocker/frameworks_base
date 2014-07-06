@@ -14,10 +14,10 @@
  * limitations under the License.
  */
 
-package com.android.internal.util.liquid.identicons;
+package com.android.internal.util.ose.identicons;
 
-import android.annotation.ChaosLab;
-import android.annotation.ChaosLab.Classification;
+import android.annotation.OSELab;
+import android.annotation.OSELab.Classification;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.provider.Settings;
@@ -25,7 +25,7 @@ import android.provider.Settings;
 /**
  * A factory to instantiate an identicon based on the type
  */
-@ChaosLab(name="QuickStats", classification=Classification.NEW_CLASS)
+@OSELab(name="QuickStats", classification=Classification.NEW_CLASS)
 public class IdenticonFactory {
 
     public static final int IDENTICON_STYLE_RETRO = 0;

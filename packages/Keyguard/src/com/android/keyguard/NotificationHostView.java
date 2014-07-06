@@ -240,12 +240,6 @@ public class NotificationHostView extends FrameLayout {
                                 mScrollView.requestDisallowInterceptTouchEvent(true);
                                 v.cancelPendingInputEvents();
                                 v.setTranslationX((!canBeDismissed() && x < 0) ? -4 * (float)Math.sqrt(-x) : x);
-
-                                int color = NotificationViewManager.config.notificationColor;
-                                int maxAlpha = (0xFF000000 & color) >> 3 * 8;
-                                v.setBackgroundColor(Color.argb(maxAlpha -
-                                                (int) (Math.abs(xr) / v.getWidth() * maxAlpha),
-                                        (0xFF0000 & color) >> 2*8, (0xFF00 & color) >> 1*8, (0xFF & color)));
                             }
                         }
                         break;
@@ -424,7 +418,6 @@ public class NotificationHostView extends FrameLayout {
 
         remoteView.setX(mDisplayWidth - mNotificationMinHeight);
         setBackgroundRecursive((ViewGroup) remoteView);
-        remoteView.setBackgroundColor(0x00FFFFFF & NotificationViewManager.config.notificationColor);
         remoteView.setAlpha(1f);
 
         View v = remoteView.findViewById(android.R.id.icon);
@@ -464,7 +457,6 @@ public class NotificationHostView extends FrameLayout {
                         } else {
                             oldView.getChildAt(0).setX(0);
                         }
-                        oldView.getChildAt(0).setBackgroundColor(NotificationViewManager.config.notificationColor);
                     }
                     oldView.statusBarNotification = sbn;
                 }
@@ -586,7 +578,6 @@ public class NotificationHostView extends FrameLayout {
                     (mShownNotifications == 1 && nv.shown)) {
                 animateBackgroundColor(this, Color.argb(MAX_ALPHA, 0, 0, 0));
             }
-            animateBackgroundColor(v, NotificationViewManager.config.notificationColor);
             if (!nv.shown) {
                 nv.shown = true;
                 mShownNotifications++;
@@ -602,7 +593,6 @@ public class NotificationHostView extends FrameLayout {
         int duration = getDurationFromDistance(v, targetX, (int)v.getY(), Math.abs(nv.getVelocity()));
         if (mShownNotifications > 0 && nv.shown) mShownNotifications--;
         if (mShownNotifications == 0) animateBackgroundColor(this, 0);
-        animateBackgroundColor(v, 0x00FFFFFF & NotificationViewManager.config.notificationColor);
         animateTranslation(nv, targetX, 0, duration);
         nv.shown = false;
         setButtonDrawable();
@@ -630,20 +620,6 @@ public class NotificationHostView extends FrameLayout {
         } catch (Exception ex) {
             Log.w(TAG, "Failed to get statusbar service!");
             return;
-        }
-
-        if (statusBar != null) {
-            try {
-                if (mNotifications.size() == 0) {
-                    statusBar.setButtonDrawable(0, 0);
-                } else if (mShownNotifications == mNotifications.size()) {
-                    statusBar.setButtonDrawable(0, 2);
-                } else {
-                    statusBar.setButtonDrawable(0, 1);
-                }
-            } catch (Exception ex) {
-                Log.e(TAG, "Failed to set button drawable!");
-            }
         }
     }
 
