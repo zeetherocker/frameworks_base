@@ -4722,6 +4722,34 @@ public final class Settings {
         public static final String PROGRESSBAR_COLOR_2 = "progressbar_color_2";
 
         /**
+         * Width of the app circle bar trigger
+         *
+         * @hide
+         */
+        public static final String APP_CIRCLE_BAR_TRIGGER_WIDTH = "app_circle_bar_trigger_width";
+
+        /**
+         * Position of app circle bar trigger
+         *
+         * @hide
+         */
+        public static final String APP_CIRCLE_BAR_TRIGGER_TOP = "app_circle_bar_trigger_top";
+
+        /**
+         * Height of the app circle bar trigger
+         *
+         * @hide
+         */
+        public static final String APP_CIRCLE_BAR_TRIGGER_HEIGHT = "app_circle_bar_trigger_height";
+
+        /**
+         * Whether to display the trigger region or not
+         *
+         * @hide
+         */
+        public static final String APP_CIRCLE_BAR_SHOW_TRIGGER = "app_circle_bar_show_trigger";
+
+        /**
          * SMOOTH PROGRESS BAR Color_3
          * @hide
          */
