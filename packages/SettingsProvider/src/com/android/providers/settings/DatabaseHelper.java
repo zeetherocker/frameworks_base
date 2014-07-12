@@ -1561,6 +1561,17 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
 
         if (upgradeVersion == 98) {
+            if (mUserHandle == UserHandle.USER_OWNER) {
+                loadQuickBootSetting(db);
+            }
+            upgradeVersion = 99;
+        }
+
+        if (upgradeVersion == 99 || upgradeVersion == 100) {
+            upgradeVersion = 101;
+        }
+
+        if (upgradeVersion == 101) {
             db.beginTransaction();
             SQLiteStatement stmt = null;
             try {
@@ -1571,7 +1582,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 db.endTransaction();
                 if (stmt != null) stmt.close();
             }
-            upgradeVersion = 99;
+            upgradeVersion = 102;
         }
 
         // *** Remember to update DATABASE_VERSION above!
