@@ -113,6 +113,9 @@
     <!-- DownloadProvider -->
     <uses-permission android:name="android.permission.ACCESS_ALL_DOWNLOADS" />
 
+    <!-- WallpaperManager -->
+    <uses-permission android:name="android.permission.SET_WALLPAPER" />
+
     <application
         android:persistent="true"
         android:allowClearUserData="false"
