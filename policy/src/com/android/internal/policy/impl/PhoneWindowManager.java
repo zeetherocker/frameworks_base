@@ -455,6 +455,8 @@ public class PhoneWindowManager implements WindowManagerPolicy {
     boolean mSearchKeyShortcutPending;
     boolean mConsumeSearchKeyUp;
 
+    boolean mCallInBackground;
+
     // support for activating the lock screen while the screen is on
     private boolean mAllowLockscreenWhenOn;
     private int mLockScreenTimeout;
@@ -645,6 +647,8 @@ public class PhoneWindowManager implements WindowManagerPolicy {
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.ACCELEROMETER_ROTATION_ANGLES), false, this,
                     UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.CALL_UI_IN_BACKGROUND), false, this);
             updateSettings();
         }
 
@@ -1442,8 +1446,61 @@ public class PhoneWindowManager implements WindowManagerPolicy {
         }
     }
 
-    public void updateStatusBarNavBarHeight() {
-        mNavigationBarHeight =
+    public void updateSettings() {
+        ContentResolver resolver = mContext.getContentResolver();
+        boolean updateRotation = false;
+        synchronized (mLock) {
+            mEndcallBehavior = Settings.System.getIntForUser(resolver,
+                    Settings.System.END_BUTTON_BEHAVIOR,
+                    Settings.System.END_BUTTON_BEHAVIOR_DEFAULT,
+                    UserHandle.USER_CURRENT);
+            mIncallPowerBehavior = Settings.Secure.getIntForUser(resolver,
+                    Settings.Secure.INCALL_POWER_BUTTON_BEHAVIOR,
+                    Settings.Secure.INCALL_POWER_BUTTON_BEHAVIOR_DEFAULT,
+                    UserHandle.USER_CURRENT);
+
+            // Call in background is no multiuser setting.
+            mCallInBackground = Settings.System.getInt(resolver,
+                    Settings.System.CALL_UI_IN_BACKGROUND, 1) == 1;
+
+            // Configure rotation lock.
+            int userRotation = Settings.System.getIntForUser(resolver,
+                    Settings.System.USER_ROTATION, Surface.ROTATION_0,
+                    UserHandle.USER_CURRENT);
+            if (mUserRotation != userRotation) {
+                mUserRotation = userRotation;
+                updateRotation = true;
+            }
+            int userRotationMode = Settings.System.getIntForUser(resolver,
+                    Settings.System.ACCELEROMETER_ROTATION, 0, UserHandle.USER_CURRENT) != 0 ?
+                            WindowManagerPolicy.USER_ROTATION_FREE :
+                                    WindowManagerPolicy.USER_ROTATION_LOCKED;
+            if (mUserRotationMode != userRotationMode) {
+                mUserRotationMode = userRotationMode;
+                updateRotation = true;
+                updateOrientationListenerLp();
+            }
+
+            mVolumeWakeScreen = Settings.System.getIntForUser(resolver,
+                    Settings.System.VOLUME_WAKE_SCREEN, 0, UserHandle.USER_CURRENT) != 0;
+
+            mVolumeMusicControls = Settings.System.getIntForUser(resolver,
+                    Settings.System.VOLUME_MUSIC_CONTROLS, 1, UserHandle.USER_CURRENT) != 0;
+
+            mNavigationBarCanMove = mShortSizeDp < 600 ?
+                    Settings.System.getIntForUser(mContext.getContentResolver(),
+                            Settings.System.NAVIGATION_BAR_CAN_MOVE, 1,
+                            UserHandle.USER_CURRENT) == 1
+                    : false;
+
+            mUserRotationAngles = Settings.System.getIntForUser(resolver,
+                    Settings.System.ACCELEROMETER_ROTATION_ANGLES, -1,
+                    UserHandle.USER_CURRENT);
+
+
+            setHasNavigationBar();
+
+            mNavigationBarHeight =
                     Settings.System.getIntForUser(mContext.getContentResolver(),
                             Settings.System.NAVIGATION_BAR_HEIGHT, -2,
                             UserHandle.USER_CURRENT);
@@ -2440,10 +2497,14 @@ public class PhoneWindowManager implements WindowManagerPolicy {
 
                 // If an incoming call is ringing, HOME is totally disabled.
                 // (The user is already on the InCallScreen at this point,
-                // and his ONLY options are to answer or reject the call.)
+                // and his ONLY options are to answer or reject the call as long
+                // it is not a call in background)
+                final boolean isCallInBackground = mCallInBackground
+                        && isScreenOnFully() && !keyguardIsShowingTq();
                 try {
                     ITelephony telephonyService = getTelephonyService();
-                    if (telephonyService != null && telephonyService.isRinging()) {
+                    if (telephonyService != null && telephonyService.isRinging()
+                            && !isCallInBackground) {
                         Log.i(TAG, "Ignoring HOME; there's a ringing incoming call.");
                         return -1;
                     }
