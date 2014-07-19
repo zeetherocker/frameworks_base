@@ -59,6 +59,7 @@ public class QSConstants {
         public static final String TILE_EQUALIZER = "toggleEqualizer";
         public static final String TILE_IMESWITCHER = "toggleImeSwitcher";
         public static final String TILE_USBTETHER = "toggleUsbTether";
+        public static final String TILE_REMOTEDISPLAY = "remoteDisplay";
 
         //Key for custom tile additive
         public static final String TILE_CUSTOM_KEY = " Key=";
@@ -90,6 +91,7 @@ public class QSConstants {
             DYNAMIC_TILES_DEFAULT.add(TILE_BUGREPORT);
             DYNAMIC_TILES_DEFAULT.add(TILE_EQUALIZER);
             DYNAMIC_TILES_DEFAULT.add(TILE_IMESWITCHER);
+            DYNAMIC_TILES_DEFAULT.add(TILE_REMOTEDISPLAY);
             DYNAMIC_TILES_DEFAULT.add(TILE_USBTETHER);
         }
 }
