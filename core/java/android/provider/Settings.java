@@ -4313,6 +4313,13 @@ public final class Settings {
         public static final String IDENTICONS_STYLE = "identicons_style";
 
         /**
+         * Detailed incall info
+         *
+         * @hide
+         */
+        public static final String DETAILED_INCALL_INFO = "detailed_incall_info";
+
+        /**
          * Left Swipe Action
          *
          * @hide
