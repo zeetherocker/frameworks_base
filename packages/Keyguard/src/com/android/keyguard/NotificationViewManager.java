@@ -171,11 +171,12 @@ public class NotificationViewManager {
         @Override
         public void onNotificationPosted(final StatusBarNotification sbn) {
             boolean screenOffAndNotCovered = !mIsScreenOn && mTimeCovered == 0;
-            boolean ongoingAndReposted = sbn.isOngoing() && mHostView.containsNotification(sbn);
-            if (mHostView.addNotification(sbn, (screenOffAndNotCovered || mIsScreenOn) && !ongoingAndReposted,
-                        config.forceExpandedView) && config.wakeOnNotification && screenOffAndNotCovered
-                        && !ongoingAndReposted
-                        && !QuietHoursHelper.inQuietHours(mContext, Settings.System.QUIET_HOURS_DIM)) {
+            boolean showNotification = !mHostView.containsNotification(sbn) || mHostView.getNotification(sbn).when != sbn.getNotification().when;
+            boolean added = mHostView.addNotification(sbn, (screenOffAndNotCovered || mIsScreenOn) && showNotification,
+                    config.forceExpandedView);
+            if (added && config.wakeOnNotification && screenOffAndNotCovered
+                      && showNotification && mTimeCovered == 0
+                      && !QuietHoursHelper.inQuietHours(mContext, Settings.System.QUIET_HOURS_DIM)) {
                 wakeDevice();
                 mHostView.showAllNotifications();
             }
@@ -188,7 +189,6 @@ public class NotificationViewManager {
         public boolean isValidNotification(final StatusBarNotification sbn) {
             return (!mExcludedApps.contains(sbn.getPackageName()));
         }
-
     }
 
     public NotificationViewManager(Context context, KeyguardViewManager viewManager) {

@@ -460,7 +460,6 @@ public class NotificationHostView extends FrameLayout {
                         } else {
                             oldView.getChildAt(0).setX(0);
                         }
-                        oldView.getChildAt(0).setBackgroundColor(NotificationViewManager.config.notificationColor);
                     }
                     oldView.statusBarNotification = sbn;
                 }
