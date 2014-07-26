@@ -4994,6 +4994,13 @@ public final class Settings {
         public static final String HEADS_UP_FLOATING_WINDOW = "heads_up_floating_window";
 
         /**
+         * Whether heads up notification is shown on the bottom of the screen (default = disabled)
+         *
+         * @hide
+         */
+        public static final String HEADS_UP_GRAVITY_BOTTOM = "heads_up_gravity_bottom";
+
+        /**
          * Use HOME/END instead of UP/DOWN as longpress action for NavBar IME Cursors
          *
          * @hide
