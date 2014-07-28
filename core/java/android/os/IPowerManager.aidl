@@ -63,5 +63,5 @@ interface IPowerManager
 
     void setKeyboardLight(boolean on, int key);
 
-    void wakeUpFromKeyEvent(long time);
+    void wakeUpWithProximityCheck(long time);
 }
