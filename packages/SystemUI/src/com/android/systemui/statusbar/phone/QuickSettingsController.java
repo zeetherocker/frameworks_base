@@ -19,6 +19,7 @@ package com.android.systemui.statusbar.phone;
 import static com.android.internal.util.ose.QSConstants.TILES_DEFAULT;
 import static com.android.internal.util.ose.QSConstants.DYNAMIC_TILES_DEFAULT;
 import static com.android.internal.util.ose.QSConstants.TILE_AIRPLANE;
+import static com.android.internal.util.ose.QSConstants.TILE_APPCIRCLEBAR;
 import static com.android.internal.util.ose.QSConstants.TILE_ALARM;
 import static com.android.internal.util.ose.QSConstants.TILE_AUTOROTATE;
 import static com.android.internal.util.ose.QSConstants.TILE_BATTERY;
@@ -93,6 +94,7 @@ import android.view.WindowManagerGlobal;
 import com.android.internal.util.ose.DeviceUtils;
 import com.android.systemui.quicksettings.AirplaneModeTile;
 import com.android.systemui.quicksettings.AlarmTile;
+import com.android.systemui.quicksettings.AppcirclebarTile;
 import com.android.systemui.quicksettings.AutoRotateTile;
 import com.android.systemui.quicksettings.BatteryTile;
 import com.android.systemui.quicksettings.BatterySaverTile;
@@ -307,6 +309,8 @@ public class QuickSettingsController {
                 qs = new HoverTile(mContext, this);
             } else if (tile.equals(TILE_HEADS_UP)) {
                 qs = new HeadsUpTile(mContext, this);
+            } else if (tile.equals(TILE_APPCIRCLEBAR)) {
+                qs = new AppcirclebarTile(mContext, this);
             }
 
             if (qs != null) {
