@@ -297,6 +297,18 @@ class GlobalActions implements DialogInterface.OnDismissListener, DialogInterfac
             );
         }
 
+        // next: expanded desktop toggle
+        // only shown if enabled and expanded desktop is enabled, disabled by default
+        boolean showExpandedDesktop =
+                Settings.System.getIntForUser(mContext.getContentResolver(),
+                        Settings.System.EXPANDED_DESKTOP_STYLE, 0, UserHandle.USER_CURRENT) != 0
+                && Settings.System.getIntForUser(mContext.getContentResolver(),
+                        Settings.System.POWER_MENU_EXPANDED_DESKTOP_ENABLED, 0, UserHandle.USER_CURRENT) == 1;
+
+        if (showExpandedDesktop) {
+            mItems.add(mExpandDesktopModeOn);
+        }
+
         // next: bug report, if enabled
         if (Settings.Global.getInt(mContext.getContentResolver(),
                 Settings.Global.BUGREPORT_IN_POWER_MENU, 0) != 0 && isCurrentUserOwner()) {
