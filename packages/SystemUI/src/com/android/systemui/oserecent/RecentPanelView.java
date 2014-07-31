@@ -303,6 +303,7 @@ public class RecentPanelView {
         popup.getMenu().add(0, MENU_APP_DETAILS_ID, 0,
                 mContext.getResources().getString(R.string.status_bar_recent_inspect_item_title));
 
+        // Add floating mode menu entry
         popup.getMenu().add(0, MENU_APP_FLOATING_ID, 0,
                 mContext.getResources().getString(R.string.status_bar_notification_floating_item_title));
 
@@ -327,10 +328,6 @@ public class RecentPanelView {
                 Log.e(TAG, "Failed looking up ApplicationInfo for " + td.packageName, ex);
             }
         }
-
-        // Add floating mode menu entry
-        popup.getMenu().add(0, MENU_APP_FLOATING_ID, 0,
-                mContext.getResources().getString(R.string.status_bar_recent_floating_item_title));
 
         // Add playstore or amazon entry if it is provided by the application.
         if (checkAppInstaller(td.packageName, PLAYSTORE_REFERENCE)) {
